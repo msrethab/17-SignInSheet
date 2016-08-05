@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
-var Student = require('./student'); // get mongoose Teacher model
-// var Lesson = require('./lesson'); // get mongoose Teacher model
+var Student = require('./student'); // get mongoose teacher model
+var Lesson = require('./lesson'); // get mongoose lesson model
+
+var Schema = mongoose.Schema;
 
 var teacherSchema = new mongoose.Schema({
     name: {
@@ -28,8 +30,8 @@ var teacherSchema = new mongoose.Schema({
     	trim: true
     },
     student: [{
-        type: Number,
-        ref: Student}]
+        type: Schema.ObjectId,
+        ref: 'Student'}]
 });
 
 var Teacher = mongoose.model('Teacher', teacherSchema);

@@ -26,6 +26,12 @@ app.use(bodyParser.json());
 // use morgan to log requests to the console
 app.use(morgan('dev'));
 
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 // basic route
 app.get('/', function(req, res) {
     res.send('Hello! The API is at http://localhost:' + port + '/api');
@@ -34,6 +40,18 @@ app.get('/', function(req, res) {
 // authorization and authentication routes containing register and login methods
 var authRoutes = require('./routes/authRoutes');
 app.use('/api', authRoutes);
+
+// student routes containing GET, POST, PUT AND DELETE methods
+var studentRoutes = require('./routes/studentRoutes');
+app.use('/api', studentRoutes);
+
+// teacher routes containing GET, POST, PUT AND DELETE methods
+var teacherRoutes = require('./routes/teacherRoutes');
+app.use('/api', teacherRoutes);
+
+// lesson routes containing GET, POST, PUT AND DELETE methods
+var lessonRoutes = require('./routes/lessonRoutes');
+app.use('/api', lessonRoutes);
 
 // test routes for middleware 
 var apiRoutes = express.Router();

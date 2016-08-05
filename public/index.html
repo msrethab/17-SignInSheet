@@ -1,44 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Code Demo</title>
-<!-- bower:css -->
-<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-<link rel="stylesheet" href="bower_components/toastr/toastr.css" />
-<!-- endbower -->
+<html lang="en" ng-app="app">
 
-<!-- inject:css -->
-<link rel="stylesheet" href="/app/styles/styles.css">
-<!-- endinject -->
+<head>
+    <meta charset="UTF-8">
+    <title>Synergy Dancezone Sign-in Sheet</title>
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/toastr/toastr.css" />
+    <!-- endbower -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/app/styles/styles.css">
+    <!-- endinject -->
 </head>
 
-<body>
-<!-- bower:js -->
-<script src="bower_components/angular/angular.js"></script>
-<script src="bower_components/jquery/dist/jquery.js"></script>
-<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-<script src="bower_components/toastr/toastr.js"></script>
-<!-- endbower -->
-<h1>Coding Demonstration</h1>
-
-<div class="container">
-	
-a href="http://10news."
-
-</div>
-<!-- inject:js -->
-<script src="/app/app.js"></script>
-<!-- endinject -->
+<body ng-controller="AuthController as vm">
+    <!-- bower:js -->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/toastr/toastr.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+    <script src="bower_components/angular-jwt/dist/angular-jwt.js"></script>
+    <!-- endbower -->
+    <div class="container">
+    </div>
+    <!-- Anchor point for partial states -->
+    <div ui-view></div>
+    <!-- Create a copyright footer -->
+    <footer class="centFooter">
+        <p>&copy; 2016 Mark Srethabhakti.</p>
+    </footer>
+    <!-- inject:js -->
+    <script src="/app/app.js"></script>
+    <script src="/app/auth/auth.controller.js"></script>
+    <script src="/app/auth/auth.factory.js"></script>
+    <script src="/app/auth/auth.interceptor.js"></script>
+    <script src="/app/modal/modal.js"></script>
+    <!-- endinject -->
 </body>
+
 </html>
-
-
-
-
-
-
-
-
-
-	<!-- <a href="http://www.10news.com" class="btn btn-primary">Click Me!</a> -->
