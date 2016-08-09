@@ -3,7 +3,7 @@
 (function() {
     'use strict';
 
-    var app = angular.module('app', ['ui.router', 'LocalStorageModule', 'angular-jwt']);
+    var app = angular.module('app', ['ui.router', 'LocalStorageModule', 'angular-jwt','ui.select', 'ngSanitize']);
 
     app.config(function(localStorageServiceProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
 
@@ -30,7 +30,7 @@
         .state('signIns', {
             url: '/signIns',
             templateUrl: '../partials/partial-signIns.html',
-            controller: 'AuthController',
+            controller: 'LessonController',
             controllerAs: 'vm'
         })
 

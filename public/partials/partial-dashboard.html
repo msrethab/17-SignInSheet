@@ -1,0 +1,23 @@
+<!-- Create Table object with head labels and empty body -->
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th class="col-md-3">Teacher</th>
+            <th class="col-md-5">Student(s)</th>
+            <th class="col-md-2">Sign-in Time</th>
+            <th class="col-md-2">Lesson Length</th>
+        </tr>
+    </thead>
+    <!-- Binding topspots data from the main controller and repeating the data into the table rows -->
+    <tbody id="dataTable">
+        <tr ng-repeat="data in vm.topspots">
+            <td>{{data.name}}</td>
+            <td>{{data.description}}</td>
+            <td class="button">
+                <a ng-href="https://www.google.com/maps?q={{data.location[0] + ',' + data.location[1]}}" target="_blank" class="btn btn-primary active" role="button">Open in Google Maps</a>
+                <a href="" ng-click="vm.deleteTopSpot(data)" class="glyphicon glyphicon-remove
+"></a>
+            </td>
+        </tr>
+    </tbody>
+</table>

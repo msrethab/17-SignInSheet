@@ -18,6 +18,10 @@ var lessonSchema = new mongoose.Schema({
         required: true,
         autopopulate: true
     }],
+    duration:{
+        type: Number,
+        required: true
+    },
     signedInDate:{
         type: Date,
         required: true,

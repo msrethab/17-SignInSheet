@@ -12,7 +12,7 @@ studentRoutes.get('/students', function(req, res) {
     if (err) {
       return res.status(500).json({ message: err.message });
     }
-    res.json({ students: students });
+    res.json({ students });
   });
 });
 
@@ -22,7 +22,7 @@ studentRoutes.post('/students', function(req, res) {
     if (err) {
       return res.status(500).json({ err: err.message });
     }
-    res.json({ 'student': student, message: 'Student Created' });
+    res.json({ student });
   });
 });
 
@@ -36,7 +36,7 @@ studentRoutes.put('/students/:id', function(req, res) {
     if (err) {
       return res.status(500).json({ err: err.message });
     }
-    res.json({ 'student': student, message: 'Student Updated' });
+    res.json({ student });
   });
 });
 

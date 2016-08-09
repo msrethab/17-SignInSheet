@@ -12,7 +12,7 @@ teacherRoutes.get('/teachers', function(req, res) {
     if (err) {
       return res.status(500).json({ message: err.message });
     }
-    res.json({ teachers: teachers });
+    res.json({ teachers });
   });
 });
 
@@ -22,7 +22,7 @@ teacherRoutes.post('/teachers', function(req, res) {
     if (err) {
       return res.status(500).json({ err: err.message });
     }
-    res.json({ 'teacher': teacher, message: 'Teacher Created' });
+    res.json({ teacher });
   });
 });
 
@@ -36,7 +36,7 @@ teacherRoutes.put('/teachers/:id', function(req, res) {
     if (err) {
       return res.status(500).json({ err: err.message });
     }
-    res.json({ 'teacher': teacher, message: 'Teacher Updated' });
+    res.json({ teacher });
   });
 });
 

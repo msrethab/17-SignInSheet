@@ -3,12 +3,89 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Add your comment!</h4>
+                <h4 class="modal-title">New Student Registration</h4>
             </div>
             <div class="modal-body" ng-transclude>
                 <form role="form">
-                    <div class="commentTextInput">
-                        <textarea class="form-control" rows="5" id="chirp" maxlength="240" placeholder="Type in your message" ng-model="vm.newCommentText"></textarea>
+                    <div class="newStudentRegForm form-group">
+                        <div class="col-xs-12">
+                            <label>Name (required)</label>
+                            <input type="" class="form-control" ng-model="vm.description" placeholder="Required">
+                            <label>Email (required)</label>
+                            <input type="" class="form-control" ng-model="vm.description" placeholder="Required">
+                            <label>Phone Number (required)</label>
+                            <input type="" class="form-control" ng-model="vm.description" placeholder="Required">
+                            <label>Street Address</label>
+                            <input type="" class="form-control" ng-model="vm.description" placeholder="Optional">
+                            <label>City</label>
+                            <input type="" class="form-control" ng-model="vm.description" placeholder="Optional">
+                        </div>
+                        <div class="form-group col-xs-6">
+                            <label>State</label>
+                            <select name="state" class="form-control">
+                                <option value="AL">AL</option>
+                                <option value="AK">AK</option>
+                                <option value="AZ">AZ</option>
+                                <option value="AR">AR</option>
+                                <option value="CA">CA</option>
+                                <option value="CO">CO</option>
+                                <option value="CT">CT</option>
+                                <option value="DE">DE</option>
+                                <option value="DC">DC</option>
+                                <option value="FL">FL</option>
+                                <option value="GA">GA</option>
+                                <option value="HI">HI</option>
+                                <option value="ID">ID</option>
+                                <option value="IL">IL</option>
+                                <option value="IN">IN</option>
+                                <option value="IA">IA</option>
+                                <option value="KS">KS</option>
+                                <option value="KY">KY</option>
+                                <option value="LA">LA</option>
+                                <option value="ME">ME</option>
+                                <option value="MD">MD</option>
+                                <option value="MA">MA</option>
+                                <option value="MI">MI</option>
+                                <option value="MN">MN</option>
+                                <option value="MS">MS</option>
+                                <option value="MO">MO</option>
+                                <option value="MT">MT</option>
+                                <option value="NE">NE</option>
+                                <option value="NV">NV</option>
+                                <option value="NH">NH</option>
+                                <option value="NJ">NJ</option>
+                                <option value="NM">NM</option>
+                                <option value="NY">NY</option>
+                                <option value="NC">NC</option>
+                                <option value="ND">ND</option>
+                                <option value="OH">OH</option>
+                                <option value="OK">OK</option>
+                                <option value="OR">OR</option>
+                                <option value="PA">PA</option>
+                                <option value="RI">RI</option>
+                                <option value="SC">SC</option>
+                                <option value="SD">SD</option>
+                                <option value="TN">TN</option>
+                                <option value="TX">TX</option>
+                                <option value="UT">UT</option>
+                                <option value="VT">VT</option>
+                                <option value="VA">VA</option>
+                                <option value="WA">WA</option>
+                                <option value="WV">WV</option>
+                                <option value="WI">WI</option>
+                                <option value="WY">WY</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-xs-6">
+                            <label>Zip</label>
+                            <input type="" class="form-control" ng-model="vm.description" placeholder="Optional">
+                        </div>
+                        <div class="col-xs-12">
+                            <label>Gender</label>
+                            <input type="" class="form-control" ng-model="vm.description" placeholder="Optional">
+                            <label>Birthday</label>
+                            <input type="" class="form-control" ng-model="vm.description" placeholder="Optional">
+                        </div>
                     </div>
                     <div class="button">
                         <button type="submit" ng-click="vm.postComment(vm.newCommentText, data); vm.showModal = !vm.showModal" class="btn btn-primary">Submit</button>

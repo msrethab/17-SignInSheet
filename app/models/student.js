@@ -21,17 +21,29 @@ var studentSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    address:{
-    	type: String,
-    	trim: true
+    streetAddress: {
+        type: String,
+        trim: true
     },
-    gender:{
-    	type: String,
-    	trim: true
+    city: {
+        type: String,
+        trim: true
+    },
+    state: {
+        type: String,
+        trim: true
+    },
+    zip: {
+        type: Number,
+        trim: true
+    },
+    gender: {
+        type: String,
+        trim: true
     },
     teacher: [{
-    	type: Schema.ObjectId,
-    	ref: 'Teacher'
+        type: Schema.ObjectId,
+        ref: 'Teacher'
     }]
 });
 

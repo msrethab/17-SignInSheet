@@ -1,31 +1,63 @@
-
-<h1>Sign-in Sheet for 8/4/2016</h1>
-
+<div class="container">
+    <!-- Synergy Logo -->
+    <div class="logo">
+        <img src="img/synergylogo.png" width="400px">
+    </div>
+    <h1>Please Sign In!</h1>
     <div class="button">
-        <button ng-click="showModal= !showModal" class="btn btn-primary">Click here to Sign In!</button>
+        <button ng-click="showModal= !showModal" class="btn btn-primary">New Student?</button>
     </div>
     <modal visible="showModal"></modal>
-    <div class="container">
-        <!-- Create Table object with head labels and empty body -->
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th class="col-md-2">Teacher</th>
-                    <th class="col-md-6">Student(s)</th>
-                    <th class="col-md-4">Sign-in Time</th>
-                </tr>
-            </thead>
-            <!-- Binding topspots data from the main controller and repeating the data into the table rows -->
-            <tbody id="dataTable">
-                <tr ng-repeat="data in vm.topspots">
-                    <td>{{data.name}}</td>
-                    <td>{{data.description}}</td>
-                    <td class="button">
-                        <a ng-href="https://www.google.com/maps?q={{data.location[0] + ',' + data.location[1]}}" target="_blank" class="btn btn-primary active" role="button">Open in Google Maps</a>
-                        <a href="" ng-click="vm.deleteTopSpot(data)" class="glyphicon glyphicon-remove
-"></a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="selector">
+        <label>Select your Teacher</label>
+        <ui-select ng-model="vm.teacherSelect" theme="bootstrap">
+            <ui-select-match placeholder="Select or search a teacher in the list...">{{$select.selected.name}}</ui-select-match>
+            <ui-select-choices repeat="item in vm.teachers | filter: $select.search">
+                <div ng-bind-html="item.name | highlight: $select.search"></div>
+                <small ng-bind-html="item.email | highlight: $select.search"></small>
+            </ui-select-choices>
+        </ui-select>
     </div>
+    <div class="selector">
+        <label>Select Student(s)</label>
+        <ui-select ng-model="vm.studentSelect" theme="bootstrap">
+            <ui-select-match placeholder="Select or search a student in the list...">{{$select.selected.name}}</ui-select-match>
+            <ui-select-choices repeat="item in vm.students | filter: $select.search">
+                <div ng-bind-html="item.name | highlight: $select.search"></div>
+                <small ng-bind-html="item.email | highlight: $select.search"></small>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="selector">
+        <label>Select Lesson Duration</label>
+        <ui-select ng-model="vm.durationSelect" theme="bootstrap">
+            <ui-select-match placeholder="Select your Lesson duration">{{$select.selected.name}}</ui-select-match>
+            <ui-select-choices repeat="item in vm.durationList | filter: $select.search">
+                <div ng-bind-html="item.name | highlight: $select.search"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="button">
+        <button type="submit" ng-click="vm.addLesson(vm.teacherSelect._id, vm.studentSelect._id, vm.durationSelect.value); vm.teacherSelect=''; vm.studentSelect =''; vm.durationSelect=''; " class="btn btn-primary">Sign-in!</button>
+    </div>
+</div>
+<!-- Create Table object with head labels and empty body -->
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th class="col-md-3">Teacher</th>
+            <th class="col-md-5">Student(s)</th>
+            <th class="col-md-2">Sign in Time</th>
+            <th class="col-md-2">Lesson Length</th>
+        </tr>
+    </thead>
+    <!-- Binding lesson data from the lessons controller and repeating the data into the table rows -->
+    <tbody id="dataTable">
+        <tr ng-repeat="data in vm.lessons">
+            <td>{{data.teacher.name}}</td>
+            <td>{{data.student[0].name}}</td>
+            <td>{{data.signedInDate | date: 'MM/dd/yy HH:mm:ss'}}</td>
+            <td>{{data.duration}} minutes</td>
+        </tr>
+    </tbody>
+</table>
