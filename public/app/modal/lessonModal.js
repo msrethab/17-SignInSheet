@@ -6,7 +6,7 @@
 
     angular
         .module('app')
-        .directive('modal', modal);
+        .directive('lessonModal', modal);
 
     modal.$inject = [];
 
@@ -17,7 +17,7 @@
         // Creates: Modal object from template
         //
         var directive = {
-            templateUrl: '../../templates/modal.html',
+            templateUrl: '../../templates/lessonModal.html',
             transclude: true,
       		  replace:true,
             restrict: 'E',

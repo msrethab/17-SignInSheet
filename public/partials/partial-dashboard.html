@@ -1,23 +1,78 @@
 <!-- Create Table object with head labels and empty body -->
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th class="col-md-3">Teacher</th>
-            <th class="col-md-5">Student(s)</th>
-            <th class="col-md-2">Sign-in Time</th>
-            <th class="col-md-2">Lesson Length</th>
-        </tr>
-    </thead>
-    <!-- Binding topspots data from the main controller and repeating the data into the table rows -->
-    <tbody id="dataTable">
-        <tr ng-repeat="data in vm.topspots">
-            <td>{{data.name}}</td>
-            <td>{{data.description}}</td>
-            <td class="button">
-                <a ng-href="https://www.google.com/maps?q={{data.location[0] + ',' + data.location[1]}}" target="_blank" class="btn btn-primary active" role="button">Open in Google Maps</a>
-                <a href="" ng-click="vm.deleteTopSpot(data)" class="glyphicon glyphicon-remove
-"></a>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<div class="container" ng-controller="LessonDashboardController as ctrl">
+    <modal visible="showModal"></modal>
+    <lesson-modal visible="showLessonModal"></lesson-modal>
+    <div class="logo">
+        <img src="img/synergylogo.png" width="400px">
+    </div>
+    <div class="button">
+        <button ng-click="showModal= !showModal" class="btn btn-primary">Add Student</button>
+        <button ng-click="showLessonModal= !showLessonModal" class="btn btn-primary">Add Lesson</button>
+    </div>
+    <div class="form-group">
+        <div class="col-md-3">
+            <label>Start Date</label>
+            <div class="input-group" moment-picker="ctrl.startDate" format="MM-DD-YYYY">
+                <span class="input-group-addon">
+                <i class="glyphicon glyphicon-calendar"></i>
+            </span>
+                <input class="form-control" placeholder="Select a date" ng-model="ctrl.startDate" ng-model-options="{ updateOn: 'blur' }">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <label>End Date</label>
+            <div class="input-group" moment-picker="ctrl.endDate" format="MM-DD-YYYY">
+                <span class="input-group-addon">
+                <i class="glyphicon glyphicon-calendar"></i>
+            </span>
+                <input class="form-control" placeholder="Select a date" ng-model="ctrl.endDate" ng-model-options="{ updateOn: 'blur' }">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="selector">
+                <label>Filter by Student</label>
+                <ui-select ng-model="ctrl.studentFilter" theme="bootstrap">
+                    <ui-select-match placeholder="Select student">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices repeat="item in vm.students | filter: $select.search">
+                        <div ng-bind-html="item.name | highlight: $select.search"></div>
+                        <small ng-bind-html="item.email | highlight: $select.search"></small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="selector">
+                <label>Filter by Lesson Duration</label>
+                <ui-select ng-model="ctrl.durationFilter" theme="bootstrap">
+                    <ui-select-match placeholder="Select duration">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices repeat="item in vm.durationList | filter: $select.search">
+                        <div ng-bind-html="item.name | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="button">
+            <button type="submit" ng-click="ctrl.startDate = ctrl.today; ctrl.endDate = ctrl.today; ctrl.studentFilter = ''; ctrl.durationFilter = ''; ctrl.searchLessons(ctrl.startDate, ctrl.endDate, ctrl.studentFilter)" class="btn btn-primary">Default Filters</button>
+            <button type="submit" ng-click="ctrl.searchLessons(ctrl.startDate, ctrl.endDate, ctrl.studentFilter, ctrl.durationFilter)" class="btn btn-primary">Apply Filters</button>
+        </div>
+    </div>
+    <table class="table table-striped table-condensed table-hover table-bordered table-responsive">
+        <thead>
+            <tr>
+                <th class="col-md-3">Teacher</th>
+                <th class="col-md-5">Student(s)</th>
+                <th class="col-md-2">Sign in Time</th>
+                <th class="col-md-2">Lesson Length</th>
+            </tr>
+        </thead>
+        <!-- Binding lesson data from the lessons controller and repeating the data into the table rows -->
+        <tbody id="dataTable">
+            <tr ng-repeat="data in ctrl.lessons">
+                <td>{{data.teacher.name}}</td>
+                <td>{{data.student[0].name}}</td>
+                <td>{{data.signedInDate | date: 'MM/dd/yy HH:mm:ss'}}</td>
+                <td>{{data.duration}} minutes</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

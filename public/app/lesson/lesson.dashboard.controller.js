@@ -1,4 +1,3 @@
-
 //Creating LessonDashboardController to extend functions of LessonController
 
 (function() {
@@ -19,13 +18,23 @@
         vm.searchLessons = searchLessons;
         vm.searchLessonsByUser = searchLessonsByUser;
 
+        vm.username = localStorageService.get("username");
+
+        vm.today = new Date();
+
+        vm.startDate = vm.today;
+        vm.endDate = vm.today;
+        vm.studentFilter = '';
+        vm.durationFilter = '';
+
         activate();
 
         ////////////////
 
         function activate() {
-
+            searchLessons(vm.startDate, vm.endDate);
         }
+
         //Creating function to call LessonFactory's deleteLesson method to delete lessons
         function deleteLesson(data) {
             var index = vm.lessons.indexOf(data);
@@ -68,14 +77,17 @@
         }
 
         //Creating function to call LessonFactory's searchLessons method to advanced search
-        function searchLessons(cityName, minRent, maxRent, bedrooms, bathrooms) {
+        function searchLessons(startDate, endDate, studentFilter, durationFilter) {
 
-            var searchQuery = { city: cityName, minRent: minRent, maxRent: maxRent, bedrooms: bedrooms, bathrooms: bathrooms };
+            startDate = new Date(startDate).setHours(0, 0, 0, 0);
+            endDate = new Date(endDate).setHours(23, 59, 59, 999);
 
-            LessonFactory.searchlessons(searchQuery)
+            vm.searchQuery = { startDate: startDate, endDate: endDate, student: studentFilter, duration: durationFilter };
+
+            LessonFactory.searchLessons(vm.searchQuery)
                 .then(function(response) {
 
-                        vm.searchResults = (response.data);
+                        vm.lessons = (response.data.lessons);
                         toastr.success('Lessons Loaded!');
 
 

@@ -4,60 +4,44 @@
         <img src="img/synergylogo.png" width="400px">
     </div>
     <h1>Please Sign In!</h1>
-    <div class="button">
-        <button ng-click="showModal= !showModal" class="btn btn-primary">New Student?</button>
-    </div>
-    <modal visible="showModal"></modal>
-    <div class="selector">
-        <label>Select your Teacher</label>
-        <ui-select ng-model="vm.teacherSelect" theme="bootstrap">
-            <ui-select-match placeholder="Select or search a teacher in the list...">{{$select.selected.name}}</ui-select-match>
-            <ui-select-choices repeat="item in vm.teachers | filter: $select.search">
-                <div ng-bind-html="item.name | highlight: $select.search"></div>
-                <small ng-bind-html="item.email | highlight: $select.search"></small>
-            </ui-select-choices>
-        </ui-select>
-    </div>
-    <div class="selector">
-        <label>Select Student(s)</label>
-        <ui-select ng-model="vm.studentSelect" theme="bootstrap">
-            <ui-select-match placeholder="Select or search a student in the list...">{{$select.selected.name}}</ui-select-match>
-            <ui-select-choices repeat="item in vm.students | filter: $select.search">
-                <div ng-bind-html="item.name | highlight: $select.search"></div>
-                <small ng-bind-html="item.email | highlight: $select.search"></small>
-            </ui-select-choices>
-        </ui-select>
-    </div>
-    <div class="selector">
-        <label>Select Lesson Duration</label>
-        <ui-select ng-model="vm.durationSelect" theme="bootstrap">
-            <ui-select-match placeholder="Select your Lesson duration">{{$select.selected.name}}</ui-select-match>
-            <ui-select-choices repeat="item in vm.durationList | filter: $select.search">
-                <div ng-bind-html="item.name | highlight: $select.search"></div>
-            </ui-select-choices>
-        </ui-select>
-    </div>
-    <div class="button">
-        <button type="submit" ng-click="vm.addLesson(vm.teacherSelect._id, vm.studentSelect._id, vm.durationSelect.value); vm.teacherSelect=''; vm.studentSelect =''; vm.durationSelect=''; " class="btn btn-primary">Sign-in!</button>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="button">
+                <button ng-click="showModal= !showModal" class="btn btn-primary">New Student?</button>
+            </div>
+            <modal visible="showModal"></modal>
+            <div class="selector">
+                <label>Select your Teacher</label>
+                <ui-select ng-model="vm.teacherSelect" theme="bootstrap">
+                    <ui-select-match placeholder="Select or search a teacher in the list...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices repeat="item in vm.teachers | filter: $select.search">
+                        <div ng-bind-html="item.name | highlight: $select.search"></div>
+                        <small ng-bind-html="item.email | highlight: $select.search"></small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="selector">
+                <label>Select Student(s)</label>
+                <ui-select ng-model="vm.studentSelect" theme="bootstrap">
+                    <ui-select-match placeholder="Select or search a student in the list...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices repeat="item in vm.students | filter: $select.search">
+                        <div ng-bind-html="item.name | highlight: $select.search"></div>
+                        <small ng-bind-html="item.email | highlight: $select.search"></small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="selector">
+                <label>Select Lesson Duration</label>
+                <ui-select ng-model="vm.durationSelect" theme="bootstrap">
+                    <ui-select-match placeholder="Select your Lesson duration">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices repeat="item in vm.durationList | filter: $select.search">
+                        <div ng-bind-html="item.name | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="button">
+                <button type="submit" ng-click="vm.addLesson(vm.teacherSelect._id, vm.studentSelect._id, vm.durationSelect.value); vm.teacherSelect=''; vm.studentSelect =''; vm.durationSelect=''; " class="btn btn-primary">Sign-in!</button>
+            </div>
+        </div>
     </div>
 </div>
-<!-- Create Table object with head labels and empty body -->
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th class="col-md-3">Teacher</th>
-            <th class="col-md-5">Student(s)</th>
-            <th class="col-md-2">Sign in Time</th>
-            <th class="col-md-2">Lesson Length</th>
-        </tr>
-    </thead>
-    <!-- Binding lesson data from the lessons controller and repeating the data into the table rows -->
-    <tbody id="dataTable">
-        <tr ng-repeat="data in vm.lessons">
-            <td>{{data.teacher.name}}</td>
-            <td>{{data.student[0].name}}</td>
-            <td>{{data.signedInDate | date: 'MM/dd/yy HH:mm:ss'}}</td>
-            <td>{{data.duration}} minutes</td>
-        </tr>
-    </tbody>
-</table>

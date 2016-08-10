@@ -4,11 +4,113 @@ h1{
 	margin-bottom: 2.5%;
 }
 
+/* Styling navbar */
+
+/* Remove the navbar's default margin-bottom and rounded borders */
+
+.navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+}
+/* On small screens, set height to 'auto' for sidenav and grid */
+
+@media screen and (max-width: 767px) {
+    .sidenav {
+        height: auto;
+        padding: 15px;
+    }
+    .row.content {
+        height: auto;
+    }
+}
+
+
+/* Log in button drop down */
+
+.navbar-brand {
+    position: relative;
+    z-index: 2;
+}
+
+.navbar-nav.navbar-right .btn {
+    position: relative;
+    z-index: 2;
+    padding: 4px 20px;
+    margin: 10px auto;
+}
+
+.navbar .navbar-collapse {
+    position: relative;
+}
+
+.navbar .navbar-collapse .navbar-right > li:last-child {
+    padding-left: 22px;
+}
+
+.navbar .nav-collapse {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    padding-right: 120px;
+    padding-left: 80px;
+    width: 100%;
+}
+
+.navbar.navbar-default .nav-collapse {
+    background-color: #f8f8f8;
+}
+
+.navbar.navbar-inverse .nav-collapse {
+    background-color: #222;
+}
+
+.navbar .nav-collapse .navbar-form {
+    border-width: 0;
+    box-shadow: none;
+}
+
+.nav-collapse>li {
+    float: right;
+}
+
+.btn.btn-circle {
+    border-radius: 50px;
+}
+
+.btn.btn-outline {
+    background-color: transparent;
+}
+
+@media screen and (max-width: 767px) {
+    .navbar .navbar-collapse .navbar-right > li:last-child {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .navbar .nav-collapse {
+        margin: 7.5px auto;
+        padding: 0;
+    }
+    .navbar .nav-collapse .navbar-form {
+        margin: 0;
+    }
+    .nav-collapse>li {
+        float: none;
+    }
+}
+
 /* Styling buttons */
 
 .button {
   text-align: center;
   margin-bottom: 2.5%;
+}
+
+.buttonDashboard{
+	text-align: left;
 }
 
 .delete{
@@ -34,6 +136,7 @@ h1{
 
 .logo{
 	margin-top: 2.5%;
+	margin-bottom: 2.5%;
   	text-align: center;
 }
 
@@ -155,6 +258,12 @@ h1{
 
 .selector{
 	margin-bottom: 2.5%;
+}
+
+/* Styling dashboard table */
+
+#dataTable{
+	text-align: left;
 }
 
 /* Styling the footer */

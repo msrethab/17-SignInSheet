@@ -24,6 +24,12 @@
         if (vm.username) {
             vm.userLoggedIn = true;
         }
+
+        $(".nav a").on("click", function() {
+            $(".nav").find(".active").removeClass("active");
+            $(this).parent().addClass("active");
+        });
+
         activate();
 
         ////////////////

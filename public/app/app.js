@@ -3,7 +3,7 @@
 (function() {
     'use strict';
 
-    var app = angular.module('app', ['ui.router', 'LocalStorageModule', 'angular-jwt','ui.select', 'ngSanitize']);
+    var app = angular.module('app', ['ui.router', 'LocalStorageModule', 'angular-jwt', 'ui.select', 'ngSanitize', 'moment-picker']);
 
     app.config(function(localStorageServiceProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
 
@@ -19,7 +19,7 @@
         $stateProvider
 
         // HOME STATES AND NESTED VIEWS ========================================
-            .state('home', {
+        .state('home', {
             url: '/home',
             templateUrl: '../partials/partial-home.html',
             controller: 'AuthController',
@@ -30,6 +30,12 @@
         .state('signIns', {
             url: '/signIns',
             templateUrl: '../partials/partial-signIns.html',
+            controller: 'LessonController',
+            controllerAs: 'vm'
+        })
+        .state('dashboard', {
+            url: '/dashboard',
+            templateUrl: '../partials/partial-dashboard.html',
             controller: 'LessonController',
             controllerAs: 'vm'
         })

@@ -17,7 +17,7 @@ lessonRoutes.get('/lessons', function(req, res) {
     var end = new Date();
     end.setHours(23, 59, 59, 999);
 
-    Lesson.find({ "signedInDate": { "$gte": start, "$lt": end } }, function(err, lessons) {
+    Lesson.find({ signedInDate: { "$gte": start, "$lt": end } }, function(err, lessons) {
         if (err) {
             return res.status(500).json({ message: err.message });
         }
@@ -31,7 +31,31 @@ lessonRoutes.post('/lessons', function(req, res) {
         if (err) {
             return res.status(500).json({ err: err.message });
         }
-        res.json({ lesson });
+        Lesson.findById(lesson._id, function(err, newLesson) {
+            if (err) {
+                return res.status(500).json({ err: err.message });
+            }
+            res.json({ newLesson });
+        });
+    });
+});
+
+lessonRoutes.post('/lessons/search', function(req, res) {
+    var search = req.body;
+    var searchQuery = { signedInDate: { $gte: search.startDate, $lt: search.endDate } };
+
+    if (search.student && search.student !== '') {
+        searchQuery.student = search.student._id;
+    }
+    if (search.duration && search.duration !==''){
+        searchQuery.duration = search.duration.value;
+    }
+
+    Lesson.find(searchQuery, function(err, lessons) {
+        if (err) {
+            return res.status(500).json({ message: err.message });
+        }
+        res.json({ lessons });
     });
 });
 

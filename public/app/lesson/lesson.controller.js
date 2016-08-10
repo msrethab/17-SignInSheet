@@ -21,6 +21,11 @@
 
         vm.username = localStorageService.get("username");
 
+        //Checks to see if there is a stored username, if yes sets login status to true
+        if (vm.username) {
+            vm.userLoggedIn = true;
+        }
+
         vm.durationList = [{
             name: '45 minutes',
             value: 45
@@ -42,7 +47,7 @@
         function activate() {
             getTeachers();
             getStudents();
-            getLessons();
+            // getLessons();
         }
 
         //Creating function to call LessonFactory's getLessons method to get and store all lessons
@@ -67,12 +72,11 @@
         //Creating function to call LessonFactory's addLesson method to add lesson
         function addLesson(teacherId, studentId, lessonDuration) {
 
-            var newLesson = { teacher: teacherId, student: studentId, duration: lessonDuration}
+            var newLesson = { teacher: teacherId, student: studentId, duration: lessonDuration }
 
             LessonFactory.addLesson(newLesson)
                 .then(function(response) {
 
-                        vm.lessons.push(response.data.lesson);
                         toastr.success('Thank you for signing in! Lesson created!');
 
                     },
@@ -105,13 +109,15 @@
         }
 
         //Creating function to call StudentFactory's addStudent method to add student
-        function addStudent(city, zip, street, squareft, bedrooms, bathrooms, rent, description) {
+        function addStudent(name, email, phoneNumber, streetAddress, city, state, zip, gender) {
 
-            StudentFactory.addStudent(city, zip, street, squareft, bedrooms, bathrooms, rent, description)
+            var newStudent = { name: name, email, email, phoneNumber: phoneNumber, streetAddress: streetAddress, city: city, state: state, zip: zip, gender: gender }
+
+            StudentFactory.addStudent(newStudent)
                 .then(function(response) {
 
                         vm.students.push(response.data.student);
-                        toastr.success('Lessons Loaded!');
+                        toastr.success('New Student Registered!');
 
                     },
                     function(error) {
