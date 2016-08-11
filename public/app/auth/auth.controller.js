@@ -37,28 +37,39 @@
         function activate() {}
 
         //Creating function to call AuthFactory to register new users
-        function registerUser(email, password, confirmPassword, firstName, lastName, phoneNumber) {
-            AuthFactory.registerUser(email, password, confirmPassword, firstName, lastName, phoneNumber).then(function(response) {
+        function registerUser(name, email, password, confirmPassword, teacherId, role) {
 
-                    toastr.success('User successfully registered!');
+            if (name && email && password && confirmPassword && teacherId && role) {
 
-                    vm.newFirstName = '';
-                    vm.newLastName = '';
-                    vm.newEmail = '';
-                    vm.newPhoneNumber = '';
-                    vm.newPassword = '';
-                    vm.newConfirmPassword = '';
+                if (password === confirmPassword) {
 
-                    $state.go("home");
+                    var newUser = { name: name, email: email, password: password, confirmPassword: confirmPassword, teacherId: teacherId, role: role }
 
-                },
-                function(error) {
-                    if (typeof error === 'object') {
-                        toastr.error('There was an error: ' + error.data);
-                    } else {
-                        toastr.error(error);
-                    }
-                });
+                    AuthFactory.registerUser(newUser).then(function(response) {
+
+                            toastr.success('User successfully registered!');
+
+                            vm.newName = '';
+                            vm.newEmail = '';
+                            vm.newPassword = '';
+                            vm.newConfirmPassword = '';
+                            vm.newTeacher = '';
+                            vm.newRole = '';
+
+                        },
+                        function(error) {
+                            if (typeof error === 'object') {
+                                toastr.error('There was an error: ' + error.data);
+                            } else {
+                                toastr.error(error);
+                            }
+                        });
+                } else{
+                    toastr.error('Password and Confirm Password do not match!')
+                }
+            } else{
+                toastr.error('Please enter all required fields!')
+            }
         }
 
         //Creating function to call login user from AuthFactory and store login status
@@ -66,6 +77,7 @@
             logoutUser();
             AuthFactory.loginUser(loginEmail, loginPassword).then(function(response) {
                     vm.userLoggedIn = true;
+                    vm.username = loginEmail;
                     vm.loginData = response.data;
 
                     toastr.success('User successfully logged in!');
@@ -84,7 +96,7 @@
                 });
         }
 
-        //Defining logoutUser to call logoutUser method in AuthFactory and redirect user to home pageupon clearing access_token from local storage
+        //Defining logoutUser to call logoutUser method in AuthFactory and redirect user to home page upon clearing access_token from local storage
         function logoutUser() {
             vm.userLoggedIn = false;
             AuthFactory.logoutUser();

@@ -17,8 +17,10 @@
         vm.editLesson = editLesson;
         vm.searchLessons = searchLessons;
         vm.searchLessonsByUser = searchLessonsByUser;
+        vm.addTeacher = addTeacher;
 
         vm.username = localStorageService.get("username");
+        vm.teacherId = localStorageService.get("teacherId");
 
         vm.today = new Date();
 
@@ -112,6 +114,27 @@
                         vm.lessons = (response.data);
                         toastr.success('Lessons Loaded!');
 
+
+                    },
+                    function(error) {
+                        if (typeof error === 'object') {
+                            toastr.error('There was an error: ' + error.data);
+                        } else {
+                            toastr.info(error);
+                        }
+                    })
+        }
+
+        //Creating function to call TeacherFactory's addTeacher method to add teacher
+        function addTeacher(name, email, phoneNumber, streetAddress, city, state, zip, gender, independent) {
+
+            var newTeacher = { name: name, email, email, phoneNumber: phoneNumber, streetAddress: streetAddress, city: city, state: state, zip: zip, gender: gender, independent: independent }
+
+            TeacherFactory.addTeacher(newTeacher)
+                .then(function(response) {
+
+                        vm.students.push(response.data.student);
+                        toastr.success('New Teacher Registered!');
 
                     },
                     function(error) {

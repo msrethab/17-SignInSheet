@@ -28,6 +28,7 @@
     <script src="bower_components/angular-ui-select/dist/select.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-moment-picker/dist/angular-moment-picker.min.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
     <!-- endbower -->
     <!-- NavBar -->
     <nav class="navbar navbar-default">
@@ -46,6 +47,8 @@
                     <li ng-show="vm.userLoggedIn"><a ui-sref="signIns" href="#">Sign-ins</a></li>
                     <!-- Dashboard button only shows when user is logged in -->
                     <li ng-show="vm.userLoggedIn"><a ui-sref="dashboard" href="#">Dashboard</a></li>
+                    <li ng-show="vm.userLoggedIn"><a ui-sref="profile" href="#">Profile</a></li>
+                    <li ng-show="vm.userLoggedIn"><a ui-sref="teachers" href="#">Manage Teachers</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Shows logout button when user logged in -->
@@ -72,6 +75,7 @@
     <script src="/app/lesson/lesson.factory.js"></script>
     <script src="/app/modal/lessonModal.js"></script>
     <script src="/app/modal/modal.js"></script>
+    <script src="/app/modal/teacherModal.js"></script>
     <script src="/app/student/student.factory.js"></script>
     <script src="/app/teacher/teacher.factory.js"></script>
     <!-- endinject -->

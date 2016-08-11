@@ -27,7 +27,9 @@ authRoutes.post('/register', function(req, res, next) {
         var userData = {
             email: req.body.email,
             name: req.body.name,
-            password: req.body.password
+            password: req.body.password,
+            role: req.body.role,
+            teacherId: req.body.teacherId
         };
 
         // use schema's `create` method to insert document into Mongo

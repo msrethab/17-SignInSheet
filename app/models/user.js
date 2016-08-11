@@ -2,6 +2,8 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');
 var Teacher = require('./teacher'); // get mongoose teacher model
 
+var Schema = mongoose.Schema;
+
 var UserSchema = new mongoose.Schema({
     email: {
       type: String,
@@ -24,8 +26,8 @@ var UserSchema = new mongoose.Schema({
       default: 'user'
     },
     teacherId: {
-      type: Number,
-      ref: 'Teacher'
+        type: Schema.ObjectId,
+        ref: 'Teacher'
     }
 });
 // authenticate input against database documents

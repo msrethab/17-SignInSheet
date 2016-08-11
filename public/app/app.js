@@ -19,7 +19,7 @@
         $stateProvider
 
         // HOME STATES AND NESTED VIEWS ========================================
-        .state('home', {
+            .state('home', {
             url: '/home',
             templateUrl: '../partials/partial-home.html',
             controller: 'AuthController',
@@ -28,16 +28,28 @@
 
         // MULTIPLE ADDITIONAL STATES AND NESTED VIEWS =========================
         .state('signIns', {
-            url: '/signIns',
-            templateUrl: '../partials/partial-signIns.html',
-            controller: 'LessonController',
-            controllerAs: 'vm'
+                url: '/signIns',
+                templateUrl: '../partials/partial-signIns.html',
+                controller: 'LessonController',
+                controllerAs: 'vm'
         })
         .state('dashboard', {
-            url: '/dashboard',
-            templateUrl: '../partials/partial-dashboard.html',
-            controller: 'LessonController',
-            controllerAs: 'vm'
+                url: '/dashboard',
+                templateUrl: '../partials/partial-dashboard.html',
+                controller: 'LessonController',
+                controllerAs: 'vm'
+        })
+        .state('profile', {
+                url: '/profile',
+                templateUrl: '../partials/partial-profile.html',
+                controller: 'LessonController',
+                controllerAs: 'vm'
+        })
+        .state('teachers', {
+                url: '/teachers',
+                templateUrl: '../partials/partial-teachers.html',
+                controller: 'LessonController',
+                controllerAs: 'vm'
         })
 
     });

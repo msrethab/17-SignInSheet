@@ -8,10 +8,10 @@
         .module('app')
         .factory('AuthFactory', AuthFactory);
 
-    AuthFactory.$inject = ['$http', '$q', 'localStorageService', 'apiUrl'];
+    AuthFactory.$inject = ['$http', '$q', 'localStorageService', 'apiUrl', 'jwtHelper'];
 
     /* @ngInject */
-    function AuthFactory($http, $q, localStorageService, apiUrl) {
+    function AuthFactory($http, $q, localStorageService, apiUrl, jwtHelper) {
         var service = {
             registerUser: registerUser,
             loginUser: loginUser,
@@ -22,21 +22,13 @@
         ////////////////
 
         //Checks user confirm password and then uses POST HTTP call to register user in database
-        function registerUser(userEmail, password, confirmPassword, firstName, lastName, phoneNumber) {
+        function registerUser(newUser) {
 
             var defer = $q.defer();
 
-            if (password !== confirmPassword){
-                defer.reject("Password must match Confirm Password.");
-
-                return defer.promise;
-            }
-
-            var newUser = {emailAddress: userEmail, password: password, confirmPassword: confirmPassword, firstName: firstName, lastName: lastName, phoneNumber: phoneNumber};
-
             $http({
                     method: 'POST',
-                    url: apiUrl + 'accounts/register',
+                    url: apiUrl + 'register',
                     headers: {
                         'Content-Type': 'application/json; charset=utf-8'
                     },
@@ -49,7 +41,7 @@
                         }
                     },
                     function(error) {
-                        defer.reject("Email Address has already been used!");
+                        defer.reject(error);
                     });
 
                 return defer.promise;
@@ -72,8 +64,14 @@
                         if (response.status === 200) {
 
                             //Stores access token and username on successful login
-                            localStorageService.set('access_token', response.data.token);
-                            localStorageService.set('username', loginEmail);
+
+                            var token = response.data.token;
+                            var tokenPayload = jwtHelper.decodeToken(token);
+
+                            localStorageService.set('access_token', token);
+                            localStorageService.set('username', tokenPayload._doc.email);
+                            localStorageService.set('role', tokenPayload._doc.role);
+                            localStorageService.set('teacherId', tokenPayload._doc.teacherId);
 
                             defer.resolve(response);
                         } else {

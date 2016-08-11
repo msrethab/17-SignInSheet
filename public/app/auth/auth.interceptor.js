@@ -27,7 +27,7 @@
         	var access_token = localStorageService.get('access_token');
 
         	if(access_token){
-        		config.headers['Authorization'] = 'Bearer ' + access_token;
+        		config.headers['x-access-token'] = access_token;
         	}
 
         	return config;

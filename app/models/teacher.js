@@ -41,6 +41,7 @@ var teacherSchema = new mongoose.Schema({
     	type: String,
     	trim: true
     },
+    independent: Boolean,
     student: [{
         type: Schema.ObjectId,
         ref: 'Student'}]
