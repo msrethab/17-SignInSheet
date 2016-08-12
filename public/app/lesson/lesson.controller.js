@@ -18,8 +18,10 @@
         vm.getStudents = getStudents;
         vm.addStudent = addStudent;
         vm.getTeachers = getTeachers;
+        vm.getTeacherById = getTeacherById;
 
         vm.username = localStorageService.get("username");
+        vm.teacherId = localStorageService.get("teacherId");
 
         //Checks to see if there is a stored username, if yes sets login status to true
         if (vm.username) {
@@ -47,7 +49,10 @@
         function activate() {
             getTeachers();
             getStudents();
-            // getLessons();
+
+            if (vm.teacherId) {
+                getTeacherById(vm.teacherId);
+            }
         }
 
         //Creating function to call LessonFactory's getLessons method to get and store all lessons
@@ -137,6 +142,25 @@
 
                         vm.teachers = response.data.teachers;
                         toastr.success('Teachers Loaded!');
+
+                    },
+                    function(error) {
+                        if (typeof error === 'object') {
+                            toastr.error('There was an error: ' + error.data);
+                        } else {
+                            toastr.info(error);
+                        }
+                    })
+        }
+
+        //Creating function to call TeacherFactory's getTeacherById method to get currentUser's teacher
+        function getTeacherById(teacherId) {
+
+            TeacherFactory.getTeacherById(teacherId)
+                .then(function(response) {
+
+                        vm.currentTeacher = response.data.teacher;
+                        toastr.success('Current Teacher Loaded!');
 
                     },
                     function(error) {

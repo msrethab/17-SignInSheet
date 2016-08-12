@@ -19,10 +19,19 @@
         vm.showLogin = showLogin;
         vm.showRegister = showRegister;
         vm.username = localStorageService.get("username");
+        vm.userRole = localStorageService.get("role");
 
         //Checks to see if there is a stored username, if yes sets login status to true
         if (vm.username) {
             vm.userLoggedIn = true;
+        }
+
+        if (vm.userRole === 'teacher' || vm.userRole === 'admin') {
+            vm.userIsTeacher = true;
+        }
+
+        if (vm.userRole === 'admin') {
+            vm.userIsAdmin = true;
         }
 
         $(".nav a").on("click", function() {
@@ -64,10 +73,10 @@
                                 toastr.error(error);
                             }
                         });
-                } else{
+                } else {
                     toastr.error('Password and Confirm Password do not match!')
                 }
-            } else{
+            } else {
                 toastr.error('Please enter all required fields!')
             }
         }
@@ -76,16 +85,25 @@
         function loginUser(loginEmail, loginPassword) {
             logoutUser();
             AuthFactory.loginUser(loginEmail, loginPassword).then(function(response) {
+                    vm.username = localStorageService.get("username");
+                    vm.userRole = localStorageService.get("role");
                     vm.userLoggedIn = true;
-                    vm.username = loginEmail;
-                    vm.loginData = response.data;
-
-                    toastr.success('User successfully logged in!');
-
                     vm.loginEmail = '';
                     vm.loginPassword = '';
 
-                    $state.go('signIns');
+                    toastr.success('User successfully logged in!');
+
+                    if (vm.userRole === 'admin') {
+                        vm.userIsAdmin = true;
+                    }
+
+                    if (vm.userRole === 'teacher' || vm.userRole === 'admin') {
+                        vm.userIsTeacher = true;
+                        $state.go('dashboard');
+                        
+                    } else {
+                        $state.go('signIns');
+                    }
                 },
                 function(error) {
                     if (typeof error === 'object') {
@@ -99,6 +117,8 @@
         //Defining logoutUser to call logoutUser method in AuthFactory and redirect user to home page upon clearing access_token from local storage
         function logoutUser() {
             vm.userLoggedIn = false;
+            vm.userIsTeacher = false;
+            vm.userIsAdmin = false;
             AuthFactory.logoutUser();
             $state.go('home');
         }

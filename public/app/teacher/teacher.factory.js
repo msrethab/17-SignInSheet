@@ -1,4 +1,3 @@
-
 //Creating TeacherFactory to handle user Teacher related services
 
 (function() {
@@ -18,13 +17,13 @@
             getTeachers: getTeachers,
             addTeacher: addTeacher,
             deleteTeacher: deleteTeacher,
-            editTeacher: editTeacher,
+            updateTeacher: updateTeacher,
+            getTeacherById: getTeacherById
         };
         return service;
 
         ////////////////
 
-        //Uses GET HTTP call to retrieve all Teacher objects from database
         function getTeachers() {
             var defer = $q.defer();
 
@@ -43,8 +42,26 @@
                 });
 
             return defer.promise;
+        }
 
+        function getTeacherById(teacherId) {
+            var defer = $q.defer();
 
+            $http({
+                method: 'GET',
+                url: url + teacherId
+            }).then(function(response) {
+                    if (typeof response.data === 'object') {
+                        defer.resolve(response);
+                    } else {
+                        defer.reject("No data found!");
+                    }
+                },
+                function(error) {
+                    defer.reject(error);
+                });
+
+            return defer.promise;
         }
 
         //Uses POST HTTP call to add a new Teacher into the database
@@ -98,7 +115,7 @@
         }
 
         //Uses PUT HTTP call to update a Teacher in the database
-        function editTeacher(updatedTeacher) {
+        function updateTeacher(updatedTeacher) {
 
             var defer = $q.defer();
 

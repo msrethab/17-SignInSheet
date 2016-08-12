@@ -140,6 +140,21 @@ h1{
   	text-align: center;
 }
 
+/* Styling the profile */
+
+.profileImage{
+	margin-bottom: 5%;
+}
+
+.profileText{
+	text-align: left;
+}
+
+.profileButtons{
+	margin-top: 5%;
+	text-align: left;
+}
+
 /* Styling login form*/
 
 .login{

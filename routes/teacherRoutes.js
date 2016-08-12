@@ -16,6 +16,16 @@ teacherRoutes.get('/teachers', function(req, res) {
   });
 });
 
+teacherRoutes.get('/teachers/:id', function(req, res) {
+  var id = req.params.id;
+  Teacher.findById(id, function(err, teacher) {
+    if (err) {
+      return res.status(500).json({ message: err.message });
+    }
+    res.json({ teacher });
+  });
+});
+
 teacherRoutes.post('/teachers', function(req, res) {
   var teacher = req.body;
   Teacher.create(teacher, function(err, teacher) {

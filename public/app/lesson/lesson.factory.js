@@ -19,8 +19,7 @@
             addLesson: addLesson,
             deleteLesson: deleteLesson,
             editLesson: editLesson,
-            searchLessons: searchLessons,
-            searchLessonsByUser: searchLessonsByUser
+            searchLessons: searchLessons
         };
         return service;
 
@@ -45,8 +44,6 @@
                 });
 
             return defer.promise;
-
-
         }
 
         //Uses POST HTTP call to add a new Lesson into the database
@@ -73,7 +70,6 @@
                 });
 
             return defer.promise;
-
         }
 
         //Uses DELETE HTTP call to delete Lesson from database
@@ -96,7 +92,6 @@
                 });
 
             return defer.promise;
-
         }
 
         //Uses PUT HTTP call to update a Lesson in the database
@@ -123,7 +118,6 @@
                 });
 
             return defer.promise;
-
         }
 
         //Uses POST HTTP call to send searchQuery object to database and returns results of advanced search
@@ -133,31 +127,6 @@
             $http({
                 method: 'POST',
                 url: url + 'search',
-                headers: {
-                    'Content-Type': 'application/json; charset=utf-8'
-                },
-                data: searchQuery
-            }).then(function(response) {
-                    if (typeof response.data === 'object') {
-                        defer.resolve(response);
-                    } else {
-                        defer.reject("No data found!");
-                    }
-                },
-                function(error) {
-                    defer.reject(error);
-                });
-
-            return defer.promise;
-        }
-
-        //Uses POST HTTP call to send searchQuery to database and returns only Lessons posted by a particular username
-        function searchLessonsByUser(searchQuery) {
-            var defer = $q.defer();
-
-            $http({
-                method: 'POST',
-                url: url + 'search/username',
                 headers: {
                     'Content-Type': 'application/json; charset=utf-8'
                 },

@@ -44,10 +44,13 @@ lessonRoutes.post('/lessons/search', function(req, res) {
     var search = req.body;
     var searchQuery = { signedInDate: { $gte: search.startDate, $lt: search.endDate } };
 
+    if (search.teacherId && search.teacherId !== '') {
+        searchQuery.teacher = search.teacherId;
+    }
     if (search.student && search.student !== '') {
         searchQuery.student = search.student._id;
     }
-    if (search.duration && search.duration !==''){
+    if (search.duration && search.duration !== '') {
         searchQuery.duration = search.duration.value;
     }
 
