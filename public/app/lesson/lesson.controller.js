@@ -53,6 +53,7 @@
             if (vm.teacherId) {
                 getTeacherById(vm.teacherId);
             }
+            countLessonsByTeacher();
         }
 
         //Creating function to call LessonFactory's getLessons method to get and store all lessons
@@ -77,7 +78,7 @@
         //Creating function to call LessonFactory's addLesson method to add lesson
         function addLesson(teacherId, studentId, lessonDuration) {
 
-            var newLesson = { teacher: teacherId, student: studentId, duration: lessonDuration }
+            var newLesson = { teacher: teacherId, student: studentId, duration: lessonDuration, createdBy: vm.username}
 
             LessonFactory.addLesson(newLesson)
                 .then(function(response) {
@@ -170,6 +171,34 @@
                             toastr.info(error);
                         }
                     })
+        }
+
+        function countLessonsByTeacher() {
+
+            LessonFactory.countLessonsByTeacher()
+                .then(function(response) {
+
+                        vm.teachers.forEach(function(teacher, teacherIndex){
+
+                            response.data.lessons.forEach(function(lessonCount,lessonCountIndex){
+                                if (teacher._id === lessonCount._id){
+                                    teacher.lessonCount = lessonCount.count;
+                                }
+                            })
+                            if(!teacher.lessonCount){
+                                teacher.lessonCount = 0;
+                            }
+                        })
+
+                    },
+                    function(error) {
+                        if (typeof error === 'object') {
+                            toastr.error('There was an error: ' + error.data);
+                        } else {
+                            toastr.info(error);
+                        }
+                    })
+
         }
     }
 })();

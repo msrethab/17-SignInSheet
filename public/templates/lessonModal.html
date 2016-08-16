@@ -1,5 +1,4 @@
-
-<div class="modal fade container" >
+<div class="modal fade container">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -35,6 +34,24 @@
                             <div ng-bind-html="item.name | highlight: $select.search"></div>
                         </ui-select-choices>
                     </ui-select>
+                </div>
+                <div class="col-md-6">
+                    <label>Lesson Date</label>
+                    <div class="input-group" moment-picker="ctrl.dateSelect" format="MM-DD-YYYY">
+                        <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                </span>
+                        <input class="form-control" placeholder="Select a date" ng-model="ctrl.dateSelect" ng-model-options="{ updateOn: 'blur' }">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label>Lesson Time</label>
+                    <div class="input-group" moment-picker="ctrl.timeSelect" format="HH:mm">
+                        <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-time"></i>
+                </span>
+                        <input class="form-control" placeholder="Select a date" ng-model="ctrl.timeSelect" ng-model-options="{ updateOn: 'blur' }">
+                    </div>
                 </div>
                 <div>
                     <button type="submit" ng-click="vm.addLesson(vm.teacherSelect._id, vm.studentSelect._id, vm.durationSelect.value); ctrl.searchLessons(ctrl.searchQuery.startDate, ctrl.searchQuery.endDate, ctrl.searchQuery.student, ctrl.searchQuery.duration); vm.teacherSelect=''; vm.studentSelect =''; vm.durationSelect=''; " data-dismiss="modal" class="btn btn-primary">Add Lesson</button>

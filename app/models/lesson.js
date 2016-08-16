@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var autopopulate = require('mongoose-autopopulate');
+var autopopulate = require('mongoose-autopopulate'); //loading autopopulate plugin
 var Student = require('./student'); // get mongoose student model
 var Teacher = require('./teacher'); // get mongoose teacher model
 
@@ -31,6 +31,13 @@ var lessonSchema = new mongoose.Schema({
         type: Date,
         required: true,
         default: Date.now
+    },
+    createdBy:{
+        type: String,
+        required: true
+    },
+    previousVersion:{
+        type: [Lesson]
     }
 });
 

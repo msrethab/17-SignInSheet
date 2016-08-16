@@ -62,6 +62,28 @@ lessonRoutes.post('/lessons/search', function(req, res) {
     });
 });
 
+lessonRoutes.get('/lessons/search/count', function(req, res) {
+
+    Lesson.aggregate([
+        {
+            $match: {
+                signedInDate: { $gte: moment().startOf('month').toDate(), $lt: moment().endOf('month').toDate()}
+            }
+        },
+        {
+            $group: {
+                _id: '$teacher',
+                count: {$sum: 1}
+            }
+        }
+    ], function(err, lessons) {
+        if (err) {
+            return res.status(500).json({ message: err.message });
+        }
+        res.json({ lessons });
+    });
+});
+
 lessonRoutes.put('/lessons/:id', function(req, res) {
     var id = req.params.id;
     var lesson = req.body;

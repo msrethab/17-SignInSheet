@@ -1,4 +1,3 @@
-
 //Creating LessonFactory to handle user Lesson related services
 
 (function() {
@@ -19,7 +18,8 @@
             addLesson: addLesson,
             deleteLesson: deleteLesson,
             editLesson: editLesson,
-            searchLessons: searchLessons
+            searchLessons: searchLessons,
+            countLessonsByTeacher: countLessonsByTeacher
         };
         return service;
 
@@ -131,6 +131,30 @@
                     'Content-Type': 'application/json; charset=utf-8'
                 },
                 data: searchQuery
+            }).then(function(response) {
+                    if (typeof response.data === 'object') {
+                        defer.resolve(response);
+                    } else {
+                        defer.reject("No data found!");
+                    }
+                },
+                function(error) {
+                    defer.reject(error);
+                });
+
+            return defer.promise;
+        }
+
+        //Uses GET HTTP call to send searchQuery object to database and returns results of advanced search
+        function countLessonsByTeacher() {
+            var defer = $q.defer();
+
+            $http({
+                method: 'GET',
+                url: url + 'search/count',
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8'
+                }
             }).then(function(response) {
                     if (typeof response.data === 'object') {
                         defer.resolve(response);
