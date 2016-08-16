@@ -22,6 +22,7 @@
 
         vm.username = localStorageService.get("username");
         vm.teacherId = localStorageService.get("teacherId");
+        vm.userRole = localStorageService.get("role");
 
         //Checks to see if there is a stored username, if yes sets login status to true
         if (vm.username) {
@@ -76,23 +77,30 @@
         }
 
         //Creating function to call LessonFactory's addLesson method to add lesson
-        function addLesson(teacherId, studentId, lessonDuration) {
+        function addLesson(teacherId, studentId, lessonDuration, lessonDateTime) {
+            if (teacherId && studentId && lessonDuration) {
+                var newLesson = { teacher: teacherId, student: studentId, duration: lessonDuration, createdBy: vm.username }
 
-            var newLesson = { teacher: teacherId, student: studentId, duration: lessonDuration, createdBy: vm.username}
+                if(vm.userRole === 'teacher' || vm.userRole === 'admin' && lessonDateTime){
+                    newLesson.signedInDate = moment(lessonDateTime, 'MM-DD-YYYY HH:mm').toDate();
+                }
 
-            LessonFactory.addLesson(newLesson)
-                .then(function(response) {
+                LessonFactory.addLesson(newLesson)
+                    .then(function(response) {
 
-                        toastr.success('Thank you for signing in! Lesson created!');
+                            toastr.success('Thank you for signing in! Lesson created!');
 
-                    },
-                    function(error) {
-                        if (typeof error === 'object') {
-                            toastr.error('There was an error: ' + error.data);
-                        } else {
-                            toastr.info(error);
-                        }
-                    })
+                        },
+                        function(error) {
+                            if (typeof error === 'object') {
+                                toastr.error('There was an error: ' + error.data);
+                            } else {
+                                toastr.info(error);
+                            }
+                        })
+            } else{
+                toastr.error('Please select a teacher, student and duration!')
+            }
         }
 
         //Creating function to call StudentFactory's getStudents method to get and store all students
@@ -178,14 +186,14 @@
             LessonFactory.countLessonsByTeacher()
                 .then(function(response) {
 
-                        vm.teachers.forEach(function(teacher, teacherIndex){
+                        vm.teachers.forEach(function(teacher, teacherIndex) {
 
-                            response.data.lessons.forEach(function(lessonCount,lessonCountIndex){
-                                if (teacher._id === lessonCount._id){
+                            response.data.lessons.forEach(function(lessonCount, lessonCountIndex) {
+                                if (teacher._id === lessonCount._id) {
                                     teacher.lessonCount = lessonCount.count;
                                 }
                             })
-                            if(!teacher.lessonCount){
+                            if (!teacher.lessonCount) {
                                 teacher.lessonCount = 0;
                             }
                         })

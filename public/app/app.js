@@ -3,7 +3,7 @@
 (function() {
     'use strict';
 
-    var app = angular.module('app', ['ui.router', 'LocalStorageModule', 'angular-jwt', 'ui.select', 'ngSanitize', 'moment-picker']);
+    var app = angular.module('app', ['ui.router', 'LocalStorageModule', 'angular-jwt', 'ui.select', 'ngSanitize', 'moment-picker', 'phonenumberModule']);
 
     app.config(function(localStorageServiceProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
 

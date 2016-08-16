@@ -73,13 +73,21 @@
         }
 
         //Uses DELETE HTTP call to delete Lesson from database
-        function deleteLesson(LessonId) {
+        function deleteLesson(lesson, username) {
 
             var defer = $q.defer();
 
+            lesson.archived = true;
+            lesson.archivedDate = moment().toDate();
+            lesson.archivedBy = username;
+
             $http({
-                method: 'DELETE',
-                url: url + LessonId,
+                method: 'PUT',
+                url: url + lesson._id,
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8'
+                },
+                data: lesson
             }).then(function(response) {
                     if (typeof response.data === 'object') {
                         defer.resolve(response);
@@ -95,17 +103,19 @@
         }
 
         //Uses PUT HTTP call to update a Lesson in the database
-        function editLesson(data) {
+        function editLesson(newLesson) {
 
             var defer = $q.defer();
 
+            newLesson.createdDate = moment().toDate();
+
             $http({
                 method: 'PUT',
-                url: url + data.LessonId,
+                url: url + newLesson._id,
                 headers: {
                     'Content-Type': 'application/json; charset=utf-8'
                 },
-                data: data
+                data: newLesson
             }).then(function(response) {
                     if (response.status = 204) {
                         defer.resolve(response);

@@ -38,6 +38,16 @@ var lessonSchema = new mongoose.Schema({
     },
     previousVersion:{
         type: [Lesson]
+    },
+    archived:{
+        type: Boolean,
+        default: false
+    },
+    archivedDate:{
+        type: Date
+    },
+    archivedBy:{
+        type: String
     }
 });
 

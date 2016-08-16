@@ -9,7 +9,7 @@
             <div class="button">
                 <button ng-click="showModal= !showModal" class="btn btn-primary">New Student?</button>
             </div>
-            <modal visible="showModal"></modal>
+            <modal template="studentModal" visible="showModal"></modal>
             <div class="selector">
                 <label>Select your Teacher</label>
                 <ui-select ng-model="vm.teacherSelect" theme="bootstrap">

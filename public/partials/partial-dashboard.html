@@ -1,6 +1,6 @@
 <div class="container" ng-controller="LessonDashboardController as ctrl">
-    <modal visible="showModal"></modal>
-    <lesson-modal visible="showLessonModal"></lesson-modal>
+    <modal template="studentModal" visible="showModal"></modal>
+    <modal template="lessonModal" visible="showLessonModal"></modal>
     <div class="logo">
         <img src="img/synergylogo.png" width="400px">
     </div>
@@ -59,25 +59,56 @@
         <thead>
             <tr>
                 <th class="col-md-3">Teacher</th>
-                <th class="col-md-5">Student(s)</th>
+                <th class="col-md-3">Student(s)</th>
                 <th class="col-md-2">Sign in Time</th>
                 <th class="col-md-2">Lesson Length</th>
+                <th class="col-md-2">Tools</th>
             </tr>
         </thead>
         <!-- Binding lesson data from the lessons controller and repeating the data into the table rows -->
         <tbody id="dataTable">
-            <tr ng-repeat="data in ctrl.lessons">
+            <tr ng-repeat="data in ctrl.lessons  | orderBy: 'signedInDate' : reverse">
                 <td>
-                    <span>{{data.teacher.name}}</span>
+                    <span ng-hide="editing">{{data.teacher.name}}</span>
+                    <ui-select ng-model="ctrl.newTeacher" ng-show="editing" theme="bootstrap">
+                        <ui-select-match placeholder="Select or search a teacher in the list...">{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="item in vm.teachers | filter: $select.search">
+                            <div ng-bind-html="item.name | highlight: $select.search"></div>
+                            <small ng-bind-html="item.email | highlight: $select.search"></small>
+                        </ui-select-choices>
+                    </ui-select>
                 </td>
                 <td>
-                    <span>{{data.student[0].name}}</span>
+                    <span ng-hide="editing">{{data.student[0].name}}</span>
+                    <ui-select ng-model="ctrl.newStudent" ng-show="editing" theme="bootstrap">
+                        <ui-select-match placeholder="Select or search a student in the list...">{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="item in vm.students | filter: $select.search">
+                            <div ng-bind-html="item.name | highlight: $select.search"></div>
+                            <small ng-bind-html="item.email | highlight: $select.search"></small>
+                        </ui-select-choices>
+                    </ui-select>
                 </td>
                 <td>
-                    <span>{{data.signedInDate | date: 'MM/dd/yy HH:mm:ss'}}</span>
+                    <span ng-hide="editing">{{data.signedInDate | date: 'MM-dd-yy HH:mm:ss'}}</span>
+                    <div class="form-group" ng-show="editing">
+                        <div moment-picker="ctrl.newSignInDate" format="MM-DD-YYYY HH:mm" min-view="month">
+                            <input class="form-control" placeholder="Select a date" ng-model="ctrl.newSignInDate" ng-model-options="{ updateOn: 'blur' }">
+                        </div>
+                    </div>
                 </td>
                 <td>
-                    <span>{{data.duration}} minutes</span>
+                    <span ng-hide="editing">{{data.duration}} minutes</span>
+                    <ui-select ng-model="ctrl.newDuration" ng-show="editing" theme="bootstrap">
+                        <ui-select-match placeholder="Select your Lesson duration">{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="item in vm.durationList | filter: $select.search">
+                            <div ng-bind-html="item.name | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </td>
+                <td>
+                    <a href="" ng-click="editing = !editing">edit <span class="glyphicon glyphicon-pencil"></span> </a>
+                    <a href="" ng-click="ctrl.editLesson(data, ctrl.newTeacher, ctrl.newStudent, ctrl.newSignInDate, ctrl.newDuration); editing = false">save <span class="glyphicon glyphicon-floppy-disk"></span> </a>
+                    <a href="" ng-click="ctrl.deleteLesson(data, ctrl.username)">delete <span class="glyphicon glyphicon-remove"></span></a>
                 </td>
             </tr>
         </tbody>

@@ -1,5 +1,5 @@
 <div class="container" ng-controller="LessonDashboardController as ctrl">
-    <teacher-modal visible="showTeacherModal"></teacher-modal>
+    <modal template="teacherModal" visible="showTeacherModal"></modal>
     <div class="logo">
         <img src="img/synergylogo.png" width="400px">
     </div>
@@ -54,7 +54,7 @@
         <tbody id="dataTable">
             <tr ng-repeat="data in vm.teachers">
                 <td>{{data.name}}</td>
-                <td>{{data.phoneNumber}}</td>
+                <td>{{data.phoneNumber | phonenumber}}</td>
                 <td>{{data.email | date: 'MM/dd/yy HH:mm:ss'}}</td>
                 <td>{{data.independent}}</td>
                 <td>{{data.lessonCount}}</td>

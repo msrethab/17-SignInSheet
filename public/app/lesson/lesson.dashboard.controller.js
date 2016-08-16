@@ -38,13 +38,13 @@
         }
 
         //Creating function to call LessonFactory's deleteLesson method to delete lessons
-        function deleteLesson(data) {
+        function deleteLesson(data, username) {
             var index = vm.lessons.indexOf(data);
-            LessonFactory.deletelesson(data.lessonId).then(function(response) {
+            LessonFactory.deleteLesson(data, username).then(function(response) {
 
                     vm.lessonDel = response.data;
                     toastr.success('Lesson Successfully Deleted!');
-
+                    vm.lessons.splice(index, 1);
 
                 },
                 function(error) {
@@ -54,17 +54,26 @@
                         toastr.info(error);
                     }
                 });
-
-            return vm.lessons.splice(index, 1);
         }
 
         //Creating function to call LessonFactory's editLesson method to update lessons
-        function editLesson(data) {
+        function editLesson(data, newTeacher, newStudent, newDateTime, newDuration) {
 
-            LessonFactory.editLesson(data)
-                .then(function(response) {
+            var updatedLesson = { _id: data._id, teacher: newTeacher._id, student: newStudent._id, signedInDate: moment(newDateTime, 'MM-DD-YYYY HH:mm').toDate(), duration: newDuration.value, createdBy: vm.username};
+            updatedLesson.previousVersion = data.previousVersion;
+            data._id = '';
+            data.previousVersion = [];
+            updatedLesson.previousVersion.push(data);
 
-                        toastr.success('Lessons Updated!');
+            LessonFactory.editLesson(updatedLesson)
+                .then(function(response) { 
+
+                        vm.newTeacher = '';
+                        vm.newStudent = '';
+                        vm.newSignInDate ='';
+                        vm.newDuration = '';
+
+                        toastr.success('Lesson Updated!');
                     },
                     function(error) {
                         if (typeof error === 'object') {

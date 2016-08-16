@@ -17,7 +17,10 @@
         // Creates: Modal object from template
         //
         var directive = {
-            templateUrl: '../../templates/modal.html',
+            //allow user to select modal template by setting template attribute in HTML
+            templateUrl: function(element, attrs){         
+                return '../../templates/' + attrs.template + '.html';
+            },
             transclude: true,
       		  replace:true,
             restrict: 'E',
