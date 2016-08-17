@@ -156,12 +156,12 @@
         }
 
         //Uses GET HTTP call to send searchQuery object to database and returns results of advanced search
-        function countLessonsByTeacher() {
+        function countLessonsByTeacher(monthFilter) {
             var defer = $q.defer();
 
             $http({
                 method: 'GET',
-                url: url + 'search/count',
+                url: url + 'search/count?month=' + monthFilter,
                 headers: {
                     'Content-Type': 'application/json; charset=utf-8'
                 }

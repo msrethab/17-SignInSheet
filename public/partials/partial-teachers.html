@@ -40,6 +40,12 @@
             </div>
         </div>
     </div>
+    <div class="form-group col-md-2 col-md-offset-10">
+        <label>Month Filter</label>
+        <div moment-picker="vm.monthFilter" format="MMMM YYYY" change="vm.countLessonsByTeacher(newValue)" min-view="year">
+            <input class="form-control" placeholder="Select month..." ng-model="vm.monthFilter" ng-model-options="{ updateOn: 'blur' }">
+        </div>
+    </div>
     <table class="table table-striped table-condensed table-hover table-bordered table-responsive">
         <thead>
             <tr>
@@ -47,7 +53,7 @@
                 <th class="col-md-2">Phone Number</th>
                 <th class="col-md-2">E-mail</th>
                 <th class="col-md-2">Independent?</th>
-                <th class="col-md-2">Lessons this Month</th>
+                <th class="col-md-2">Lessons in {{vm.monthFilter}}</th>
             </tr>
         </thead>
         <!-- Binding lesson data from the lessons controller and repeating the data into the table rows -->

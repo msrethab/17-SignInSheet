@@ -12,7 +12,7 @@
             <modal template="studentModal" visible="showModal"></modal>
             <div class="selector">
                 <label>Select your Teacher</label>
-                <ui-select ng-model="vm.teacherSelect" theme="bootstrap">
+                <ui-select ng-model="vm.teacherSelect" ng-disabled="vm.userIsTeacher && !vm.userIsAdmin" theme="bootstrap">
                     <ui-select-match placeholder="Select or search a teacher in the list...">{{$select.selected.name}}</ui-select-match>
                     <ui-select-choices repeat="item in vm.teachers | filter: $select.search">
                         <div ng-bind-html="item.name | highlight: $select.search"></div>

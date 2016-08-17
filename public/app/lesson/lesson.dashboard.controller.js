@@ -37,7 +37,7 @@
             searchLessons(vm.startDate, vm.endDate);
         }
 
-        //Creating function to call LessonFactory's deleteLesson method to delete lessons
+        //Creating function to call LessonFactory's deleteLesson method to archive lessons and hide from users
         function deleteLesson(data, username) {
             var index = vm.lessons.indexOf(data);
             LessonFactory.deleteLesson(data, username).then(function(response) {
@@ -60,8 +60,9 @@
         function editLesson(data, newTeacher, newStudent, newDateTime, newDuration) {
 
             var updatedLesson = { _id: data._id, teacher: newTeacher._id, student: newStudent._id, signedInDate: moment(newDateTime, 'MM-DD-YYYY HH:mm').toDate(), duration: newDuration.value, createdBy: vm.username};
+ 
+            //creating version history by cloning previous version history and stripping out self references to avoid JSON parsing loop
             updatedLesson.previousVersion = data.previousVersion;
-            data._id = '';
             data.previousVersion = [];
             updatedLesson.previousVersion.push(data);
 

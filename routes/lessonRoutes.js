@@ -9,7 +9,7 @@ var mid = require('../middleware/middleware');
 
 var lessonRoutes = express.Router();
 
-// get route defaults to search for all lessons created today
+// get route defaults to search for all lessons signed in today
 lessonRoutes.get('/lessons', function(req, res) {
     var start = new Date();
     start.setHours(0, 0, 0, 0);
@@ -64,10 +64,12 @@ lessonRoutes.post('/lessons/search', function(req, res) {
 
 lessonRoutes.get('/lessons/search/count', function(req, res) {
 
+    var month = req.query.month;
+
     Lesson.aggregate([
         {
             $match: {
-                signedInDate: { $gte: moment().startOf('month').toDate(), $lt: moment().endOf('month').toDate()},
+                signedInDate: { $gte: moment(month).startOf('month').toDate(), $lt: moment(month).endOf('month').toDate()},
                 archived: false
             }
         },

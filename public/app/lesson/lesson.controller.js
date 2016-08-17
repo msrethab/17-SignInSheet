@@ -19,6 +19,7 @@
         vm.addStudent = addStudent;
         vm.getTeachers = getTeachers;
         vm.getTeacherById = getTeacherById;
+        vm.countLessonsByTeacher = countLessonsByTeacher;
 
         vm.username = localStorageService.get("username");
         vm.teacherId = localStorageService.get("teacherId");
@@ -28,6 +29,16 @@
         if (vm.username) {
             vm.userLoggedIn = true;
         }
+        
+        if (vm.userRole === 'teacher' || vm.userRole === 'admin') {
+            vm.userIsTeacher = true;
+        }
+
+        if (vm.userRole === 'admin') {
+            vm.userIsAdmin = true;
+        }
+
+        vm.monthFilter = moment();
 
         vm.durationList = [{
             name: '45 minutes',
@@ -81,7 +92,7 @@
             if (teacherId && studentId && lessonDuration) {
                 var newLesson = { teacher: teacherId, student: studentId, duration: lessonDuration, createdBy: vm.username }
 
-                if(vm.userRole === 'teacher' || vm.userRole === 'admin' && lessonDateTime){
+                if (vm.userRole === 'teacher' || vm.userRole === 'admin' && lessonDateTime) {
                     newLesson.signedInDate = moment(lessonDateTime, 'MM-DD-YYYY HH:mm').toDate();
                 }
 
@@ -98,7 +109,7 @@
                                 toastr.info(error);
                             }
                         })
-            } else{
+            } else {
                 toastr.error('Please select a teacher, student and duration!')
             }
         }
@@ -170,6 +181,9 @@
 
                         vm.currentTeacher = response.data.teacher;
                         toastr.success('Current Teacher Loaded!');
+                        if (vm.userRole = 'teacher') {
+                            vm.teacherSelect = vm.currentTeacher;
+                        }
 
                     },
                     function(error) {
@@ -181,21 +195,18 @@
                     })
         }
 
-        function countLessonsByTeacher() {
+        function countLessonsByTeacher(monthFilter) {
 
-            LessonFactory.countLessonsByTeacher()
+            LessonFactory.countLessonsByTeacher(monthFilter)
                 .then(function(response) {
 
                         vm.teachers.forEach(function(teacher, teacherIndex) {
-
+                            teacher.lessonCount = 0;
                             response.data.lessons.forEach(function(lessonCount, lessonCountIndex) {
                                 if (teacher._id === lessonCount._id) {
                                     teacher.lessonCount = lessonCount.count;
                                 }
                             })
-                            if (!teacher.lessonCount) {
-                                teacher.lessonCount = 0;
-                            }
                         })
 
                     },
