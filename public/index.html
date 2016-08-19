@@ -15,7 +15,7 @@
     <!-- endinject -->
 </head>
 
-<body ng-controller="AuthController as vm">
+<body ng-controller="AuthController as home">
     <!-- bower:js -->
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -43,32 +43,32 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
-                    <li ng-show="vm.userLoggedIn && vm.userIsTeacher"><a ui-sref="profile" href="#">Profile</a></li>
-                    <li ng-show="vm.userLoggedIn"><a ui-sref="signIns" href="#">Sign-ins</a></li>
+                    <li ng-show="home.userLoggedIn && home.userIsTeacher"><a ui-sref="profile" href="#">Profile</a></li>
+                    <li ng-show="home.userLoggedIn"><a ui-sref="signIns" href="#">Sign-ins</a></li>
                     <!-- Dashboard button only shows when user is logged in -->
-                    <li ng-show="vm.userLoggedIn && vm.userIsTeacher"><a ui-sref="dashboard" href="#">Dashboard</a></li>
-                    <li ng-show="vm.userLoggedIn && vm.userIsAdmin"><a ui-sref="teachers" href="#">Manage Teachers</a></li>
+                    <li ng-show="home.userLoggedIn && home.userIsTeacher"><a ui-sref="dashboard" href="#">Dashboard</a></li>
+                    <li ng-show="home.userLoggedIn && home.userIsAdmin"><a ui-sref="teachers" href="#">Manage Teachers</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li ng-hide="vm.userLoggedIn">
+                    <li ng-hide="home.userLoggedIn">
                         <a class="btn btn-default btn-outline btn-circle" data-toggle="collapse" href="#nav-collapse2" aria-expanded="false" aria-controls="nav-collapse2">Log in</a>
                     </li>
                     <!-- Shows logout button when user logged in -->
-                    <li ng-show="vm.userLoggedIn">
-                        <a class="btn btn-default btn-outline btn-circle" ng-click="vm.logoutUser()">Log out</a>
+                    <li ng-show="home.userLoggedIn">
+                        <a class="btn btn-default btn-outline btn-circle" ng-click="home.logoutUser()">Log out</a>
                     </li>
                     <!-- Dropdown login form -->
                     <div class="collapse nav navbar-nav nav-collapse" id="nav-collapse2">
                         <form class="navbar-right form-inline" role="form">
                             <div class="form-group">
                                 <label class="sr-only" for="Email">Email</label>
-                                <input ng-model="vm.loginEmail" type="email" class="form-control" id="Email" placeholder="Email" autofocus required />
+                                <input ng-model="home.loginEmail" type="email" class="form-control" id="Email" placeholder="Email" autofocus required />
                             </div>
                             <div class="form-group">
                                 <label class="sr-only" for="Password">Password</label>
-                                <input ng-model="vm.loginPassword" type="password" class="form-control" id="Password" placeholder="Password" required />
+                                <input ng-model="home.loginPassword" type="password" class="form-control" id="Password" placeholder="Password" required />
                             </div>
-                            <button ng-click="vm.loginUser(vm.loginEmail, vm.loginPassword)" data-toggle="collapse" aria-expanded="false" data-target="#nav-collapse2" type="submit" class="btn btn-success">Sign in</button>
+                            <button ng-click="home.loginUser(home.loginEmail, home.loginPassword)" data-toggle="collapse" aria-expanded="false" data-target="#nav-collapse2" type="submit" class="btn btn-success">Sign in</button>
                         </form>
                     </div>
                 </ul>
@@ -86,11 +86,11 @@
     <script src="/app/auth/auth.controller.js"></script>
     <script src="/app/auth/auth.factory.js"></script>
     <script src="/app/auth/auth.interceptor.js"></script>
-    <script src="/app/filter/phoneNumber.filter.js"></script>
     <script src="/app/lesson/lesson.controller.js"></script>
     <script src="/app/lesson/lesson.dashboard.controller.js"></script>
     <script src="/app/lesson/lesson.factory.js"></script>
     <script src="/app/modal/modal.js"></script>
+    <script src="/app/filter/phoneNumber.filter.js"></script>
     <script src="/app/student/student.factory.js"></script>
     <script src="/app/teacher/teacher.factory.js"></script>
     <script src="/app/teacher/teacher.profile.controller.js"></script>

@@ -15,11 +15,16 @@
         vm.title = 'AuthController';
         vm.registerUser = registerUser;
         vm.loginUser = loginUser;
+        vm.updateUser = updateUser;
         vm.logoutUser = logoutUser;
         vm.showLogin = showLogin;
         vm.showRegister = showRegister;
+
         vm.username = localStorageService.get("username");
         vm.userRole = localStorageService.get("role");
+        vm.userId = localStorageService.get("_id");
+        vm.userName = localStorageService.get("name");
+        vm.teacherId = localStorageService.get("teacherId");
 
         //Checks to see if there is a stored username, if yes sets login status to true
         if (vm.username) {
@@ -81,6 +86,36 @@
             }
         }
 
+        function updateUser(email, password, newPassword, newConfirmPassword) {
+
+            if (newPassword !== newConfirmPassword) {
+                toastr.error('New Password does not match Confirm Password')
+            } else {
+                var updatedUser = { _id: vm.userId, email: vm.username, name: vm.userName, teacherId: vm.teacherId, password: newPassword, role: vm.userRole };
+                var updateUserRequest = { email: email, password: password, updatedUser: updatedUser };
+
+                AuthFactory.updateUser(updateUserRequest)
+                    .then(function(response) {
+
+                            vm.email = '';
+                            vm.password = '';
+                            vm.newPassword = '';
+                            vm.newConfirmPassword = '';
+
+                            toastr.success('User Password Updated!');
+                            logoutUser();
+                        },
+                        function(error) {
+                            if (typeof error === 'object') {
+                                toastr.error('There was an error: ' + error.data);
+                            } else {
+                                toastr.info(error);
+                            }
+                        })
+            }
+
+        }
+
         //Creating function to call login user from AuthFactory and store login status
         function loginUser(loginEmail, loginPassword) {
             logoutUser();
@@ -100,7 +135,7 @@
                     if (vm.userRole === 'teacher' || vm.userRole === 'admin') {
                         vm.userIsTeacher = true;
                         $state.go('dashboard');
-                        
+
                     } else {
                         $state.go('signIns');
                     }

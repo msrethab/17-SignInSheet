@@ -11,7 +11,7 @@
     function TeacherProfileController(TeacherFactory, LessonFactory, StudentFactory, localStorageService) {
         var vm = this;
         vm.title = 'TeacherProfileController';
-        vm.editTeacher = editTeacher;
+        vm.updateTeacher = updateTeacher;
 
         activate();
 
@@ -19,28 +19,41 @@
 
         function activate() {}
 
-        //Creating function to call TeacherFactory's editTeacher method to update Teacher
-        function editTeacher(data, newTeacher, newStudent, newDateTime, newDuration) {
+        //Creating function to call TeacherFactory's updateTeacher method to update Teacher
+        function updateTeacher(currentTeacher, updatedTeacherInfo) {
 
-            var updatedTeacher = { _id: data._id, teacher: newTeacher._id, student: newStudent._id, signedInDate: moment(newDateTime, 'MM-DD-YYYY HH:mm').toDate(), duration: newDuration.value, createdBy: vm.username };
+            var updatedTeacher = currentTeacher
 
-            TeacherFactory.editTeacher(updatedTeacher)
-                .then(function(response) {
+            if (updatedTeacherInfo) {
+                Object.keys(updatedTeacher).forEach(function(key, index) {
 
-                        vm.newTeacher = '';
-                        vm.newStudent = '';
-                        vm.newSignInDate = '';
-                        vm.newDuration = '';
+                    if (updatedTeacherInfo[key] && updatedTeacherInfo[key] !== '') {
+                        updatedTeacher[key] = updatedTeacherInfo[key];
+                    }
+                });
 
-                        toastr.success('Teacher Profile Updated!');
-                    },
-                    function(error) {
-                        if (typeof error === 'object') {
-                            toastr.error('There was an error: ' + error.data);
-                        } else {
-                            toastr.info(error);
-                        }
-                    })
+                TeacherFactory.updateTeacher(updatedTeacher)
+                    .then(function(response) {
+                            vm.updatedTeacher.name = '';
+                            vm.updatedTeacher.email = '';
+                            vm.updatedTeacher.phoneNumber = '';
+                            vm.updatedTeacher.streetAddress = '';
+                            vm.updatedTeacher.city = '';
+                            vm.updatedTeacher.state = '';
+                            vm.updatedTeacher.zip = '';
+                            vm.updatedTeacher.gender = '';
+                            vm.updatedTeacher.independent = '';
+
+                            toastr.success('Teacher Profile Updated!');
+                        },
+                        function(error) {
+                            if (typeof error === 'object') {
+                                toastr.error('There was an error: ' + error.data);
+                            } else {
+                                toastr.info(error);
+                            }
+                        })
+            }
         }
     }
 })();

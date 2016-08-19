@@ -7,18 +7,18 @@
             </div>
             <div class="modal-body" ng-transclude>
                 <form role="form">
-                    <div class="newStudentRegForm form-group">
+                    <div class="registrationForm form-group">
                         <div class="col-xs-12">
                             <label>Name (required)</label>
-                            <input type="" class="form-control" ng-model="ctrl.newName" placeholder="Required">
+                            <input type="text" class="form-control" ng-model="ctrl.newName" placeholder="Required">
                             <label>Email (required)</label>
-                            <input type="" class="form-control" ng-model="ctrl.newEmail" placeholder="Required">
+                            <input type="email" class="form-control" ng-model="ctrl.newEmail" placeholder="Required">
                             <label>Phone Number (required)</label>
-                            <input type="" class="form-control" ng-model="ctrl.newPhoneNumber" placeholder="Required">
+                            <input type="tel" class="form-control" ng-model="ctrl.newPhoneNumber" placeholder="Required">
                             <label>Street Address</label>
-                            <input type="" class="form-control" ng-model="ctrl.newStreetAddress" placeholder="Optional">
+                            <input type="text" class="form-control" ng-model="ctrl.newStreetAddress" placeholder="Optional">
                             <label>City</label>
-                            <input type="" class="form-control" ng-model="ctrl.newCity" placeholder="Optional">
+                            <input type="text" class="form-control" ng-model="ctrl.newCity" placeholder="Optional">
                         </div>
                         <div class="form-group col-xs-6">
                             <label>State</label>
@@ -78,7 +78,7 @@
                         </div>
                         <div class="form-group col-xs-6">
                             <label>Zip</label>
-                            <input type="" class="form-control" ng-model="ctrl.newZip" placeholder="Optional">
+                            <input type="number" class="form-control" ng-model="ctrl.newZip" placeholder="Optional">
                         </div>
                         <div class="col-xs-6">
                             <label>Gender</label>
