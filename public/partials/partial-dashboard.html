@@ -30,7 +30,7 @@
         <div class="col-md-3">
             <div class="selector">
                 <label>Filter by Student</label>
-                <ui-select ng-model="ctrl.studentFilter" theme="bootstrap">
+                <ui-select ng-model="ctrl.studentFilter" theme="bootstrap" append-to-body="true">
                     <ui-select-match placeholder="Select student">{{$select.selected.name}}</ui-select-match>
                     <ui-select-choices repeat="item in vm.students | filter: $select.search">
                         <div ng-bind-html="item.name | highlight: $select.search"></div>
@@ -42,7 +42,7 @@
         <div class="col-md-3">
             <div class="selector">
                 <label>Filter by Lesson Duration</label>
-                <ui-select ng-model="ctrl.durationFilter" theme="bootstrap">
+                <ui-select ng-model="ctrl.durationFilter" theme="bootstrap" append-to-body="true">
                     <ui-select-match placeholder="Select duration">{{$select.selected.name}}</ui-select-match>
                     <ui-select-choices repeat="item in vm.durationList | filter: $select.search">
                         <div ng-bind-html="item.name | highlight: $select.search"></div>

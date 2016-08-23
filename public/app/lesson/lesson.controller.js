@@ -89,29 +89,43 @@
 
         //Creating function to call LessonFactory's addLesson method to add lesson
         function addLesson(teacherId, studentId, lessonDuration, lessonDateTime) {
-            if (teacherId && studentId && lessonDuration) {
-                var newLesson = { teacher: teacherId, student: studentId, duration: lessonDuration, createdBy: vm.username }
 
-                if (vm.userRole === 'teacher' || vm.userRole === 'admin' && lessonDateTime) {
-                    newLesson.signedInDate = moment(lessonDateTime, 'MM-DD-YYYY HH:mm').toDate();
+            if (vm.termsAccepted || vm.userRole=== 'admin' || vm.userRole === 'teacher') {
+                if (teacherId && studentId && lessonDuration) {
+                    var newLesson = { teacher: teacherId, student: studentId, duration: lessonDuration, createdBy: vm.username }
+
+                    if (vm.userRole === 'teacher' || vm.userRole === 'admin') {
+                        if (lessonDateTime) {
+                            newLesson.signedInDate = moment(lessonDateTime, 'MM-DD-YYYY HH:mm').toDate();
+                        }
+                    }
+
+                    LessonFactory.addLesson(newLesson)
+                        .then(function(response) {
+
+                                if (vm.userRole === 'user') {
+                                    vm.teacherSelect = '';
+                                }
+                                vm.studentSelect = '';
+                                vm.durationSelect = '';
+                                vm.termsAccepted = false;
+                                toastr.success('Thank you for signing in! Lesson created!');
+
+                            },
+                            function(error) {
+                                if (typeof error === 'object') {
+                                    toastr.error('There was an error: ' + error.data);
+                                } else {
+                                    toastr.info(error);
+                                }
+                            })
+                } else {
+                    toastr.error('Please select a teacher, student and duration!')
                 }
-
-                LessonFactory.addLesson(newLesson)
-                    .then(function(response) {
-
-                            toastr.success('Thank you for signing in! Lesson created!');
-
-                        },
-                        function(error) {
-                            if (typeof error === 'object') {
-                                toastr.error('There was an error: ' + error.data);
-                            } else {
-                                toastr.info(error);
-                            }
-                        })
-            } else {
-                toastr.error('Please select a teacher, student and duration!')
+            } else{
+                toastr.error('Please accept the Terms of Service to check in!')
             }
+
         }
 
         //Creating function to call StudentFactory's getStudents method to get and store all students

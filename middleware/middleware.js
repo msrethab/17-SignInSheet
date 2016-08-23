@@ -29,7 +29,6 @@ function requiresToken(req, res, next) {
         });
 
     } else {
-
         // if there is no token
         // return an error
         return res.status(403).send({

@@ -7,15 +7,17 @@
         .module('app')
         .factory('AuthFactory', AuthFactory);
 
-    AuthFactory.$inject = ['$http', '$q', 'localStorageService', 'apiUrl', 'jwtHelper'];
+    AuthFactory.$inject = ['$http', '$q', 'localStorageService', 'apiUrl', 'jwtHelper', '$state'];
 
     /* @ngInject */
-    function AuthFactory($http, $q, localStorageService, apiUrl, jwtHelper) {
+    function AuthFactory($http, $q, localStorageService, apiUrl, jwtHelper, $state) {
         var service = {
             registerUser: registerUser,
             loginUser: loginUser,
             updateUser: updateUser,
-            logoutUser: logoutUser
+            logoutUser: logoutUser,
+            tokenExpired: tokenExpired,
+            authorizeRoute: authorizeRoute
         };
         return service;
 
@@ -111,6 +113,42 @@
                 });
 
             return defer.promise;
+        }
+
+        function tokenExpired() {
+            var token = localStorageService.get('access_token');
+
+            if (token) {
+                var tokenExpired = jwtHelper.isTokenExpired(token);
+                return tokenExpired;
+            }
+        }
+
+        function authorizeRoute(accessRole) {
+            var userRole = localStorageService.get('role');
+
+            if (userRole) {
+                if (userRole === accessRole || userRole === 'admin') {
+                    return true;
+                }
+                if (accessRole === 'user' && userRole === 'teacher') {
+                    return true;
+                }
+                if (userRole === 'user') {
+                    $state.go('signIns');
+                    return false;
+                }
+                if(userRole ==='teacher'){
+                    $state.go('dashboard');
+                    return false;
+                } else {
+                    $state.go('accessDenied');
+                    return false;
+                }
+            } else {
+                $state.go('home');
+                return false;
+            }
         }
 
         //Defining method for logging users out by clearing out access token from local storage

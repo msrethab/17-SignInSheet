@@ -48,7 +48,9 @@
 
         ////////////////
 
-        function activate() {}
+        function activate() {
+            tokenExpired();
+        }
 
         //Creating function to call AuthFactory to register new users
         function registerUser(name, email, password, confirmPassword, teacherId, role) {
@@ -152,13 +154,23 @@
                 });
         }
 
+        function tokenExpired() {
+
+            var tokenExpired = AuthFactory.tokenExpired();
+
+            if (tokenExpired) {;
+                toastr.error('Access token has expired. Please log-in again!');
+                logoutUser();
+            }
+        }
+
         //Defining logoutUser to call logoutUser method in AuthFactory and redirect user to home page upon clearing access_token from local storage
         function logoutUser() {
+            $state.go('home');
             vm.userLoggedIn = false;
             vm.userIsTeacher = false;
             vm.userIsAdmin = false;
             AuthFactory.logoutUser();
-            $state.go('home');
         }
 
         //Defining methods to show either login or register form

@@ -14,7 +14,7 @@
             .setStorageType('localStorage')
             .setNotify(true, true)
 
-        $urlRouterProvider.otherwise('/home');
+        $urlRouterProvider.otherwise('/dashboard');
 
         $stateProvider
 
@@ -29,28 +29,61 @@
                 url: '/signIns',
                 templateUrl: '../partials/partial-signIns.html',
                 controller: 'LessonController',
-                controllerAs: 'vm'
-        })
-        .state('dashboard', {
+                controllerAs: 'vm',
+                data: {
+                    role: 'user'
+                }
+            })
+            .state('dashboard', {
                 url: '/dashboard',
                 templateUrl: '../partials/partial-dashboard.html',
                 controller: 'LessonController',
-                controllerAs: 'vm'
-        })
-        .state('profile', {
+                controllerAs: 'vm',
+                data: {
+                    role: 'teacher'
+                }
+            })
+            .state('profile', {
                 url: '/profile',
                 templateUrl: '../partials/partial-profile.html',
                 controller: 'LessonController',
-                controllerAs: 'vm'
-        })
-        .state('teachers', {
+                controllerAs: 'vm',
+                data: {
+                    role: 'teacher'
+                }
+            })
+            .state('teachers', {
                 url: '/teachers',
                 templateUrl: '../partials/partial-teachers.html',
                 controller: 'LessonController',
-                controllerAs: 'vm'
-        })
+                controllerAs: 'vm',
+                data: {
+                    role: 'admin'
+                }
+            })
+            .state('accessDenied', {
+                url: '/accessDenied',
+                templateUrl: '../partials/partial-accessDenied.html'
+            })
 
     });
+
+    //route redirection by roles
+    app.run(['$rootScope', '$state', '$stateParams', 'AuthFactory',
+        function($rootScope, $state, $stateParams,
+            AuthFactory) {
+            $rootScope.$on('$stateChangeStart',
+                function(event, toState) {
+
+                    if (angular.isDefined(toState.data)) {
+                        if (!AuthFactory.authorizeRoute(toState.data.role)) {
+                            event.preventDefault();
+                        }
+                    }
+                });
+        }
+    ]);
+
     //Global variable 
     app.value("apiUrl", "http://localhost:3000/api/");
 })();
