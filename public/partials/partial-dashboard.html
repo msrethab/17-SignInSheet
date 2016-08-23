@@ -73,7 +73,7 @@
             <tr ng-repeat="data in ctrl.lessons  | orderBy: 'signedInDate' : reverse">
                 <td>
                     <span ng-hide="editing">{{data.teacher.name}}</span>
-                    <ui-select ng-model="ctrl.newTeacher" ng-show="editing" theme="bootstrap">
+                    <ui-select ng-model="ctrl.newTeacher" ng-disabled="vm.userIsTeacher && !vm.userIsAdmin" ng-show="editing" theme="bootstrap">
                         <ui-select-match placeholder="Select or search a teacher in the list...">{{$select.selected.name}}</ui-select-match>
                         <ui-select-choices repeat="item in vm.teachers | filter: $select.search">
                             <div ng-bind-html="item.name | highlight: $select.search"></div>
@@ -109,7 +109,7 @@
                     </ui-select>
                 </td>
                 <td>
-                    <a href="" ng-click="editing = !editing">edit <span class="glyphicon glyphicon-pencil"></span> </a>
+                    <a href="" ng-click="editing = !editing; ctrl.newTeacher = data.teacher; ctrl.newStudent = data.student[0]">edit <span class="glyphicon glyphicon-pencil"></span> </a>
                     <a href="" ng-click="ctrl.editLesson(data, ctrl.newTeacher, ctrl.newStudent, ctrl.newSignInDate, ctrl.newDuration); editing = false">save <span class="glyphicon glyphicon-floppy-disk"></span> </a>
                     <a href="" ng-click="ctrl.deleteLesson(data, ctrl.username)">delete <span class="glyphicon glyphicon-remove"></span></a>
                 </td>

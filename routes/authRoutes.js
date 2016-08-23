@@ -4,6 +4,7 @@ var bcrypt = require('bcryptjs'); //use to hash password on update
 var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var config = require('../config'); // get our config file
 var User = require('../app/models/user'); // get our mongoose model
+var mid = require('../middleware/middleware'); //injecting middleware
 app.set('superSecret', config.secret); // secret variable
 
 // Authentication and authorization routes

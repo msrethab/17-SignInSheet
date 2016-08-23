@@ -1,4 +1,3 @@
-
 //Creating Authorization Interceptor for managing HTTP requests and responses
 
 (function() {
@@ -11,7 +10,7 @@
     AuthInterceptor.$inject = ['localStorageService'];
 
     /* @ngInject */
-    function AuthInterceptor   (localStorageService) {
+    function AuthInterceptor(localStorageService) {
         var service = {
             request: request
         };
@@ -19,18 +18,18 @@
 
         ////////////////
 
-        //Interceptor appends Authorization header with access token from local storage on all requests except login
-        
+        //Interceptor appends [x-access-token] header with access token from local storage on all requests except login
+
         function request(config) {
 
-        	config.headers = config.headers || {};
-        	var access_token = localStorageService.get('access_token');
+            config.headers = config.headers || {};
+            var access_token = localStorageService.get('access_token');
 
-        	if(access_token){
-        		config.headers['x-access-token'] = access_token;
-        	}
+            if (access_token) {
+                config.headers['x-access-token'] = access_token;
+            }
 
-        	return config;
+            return config;
         }
     }
 })();

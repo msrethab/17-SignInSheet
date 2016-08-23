@@ -52,7 +52,7 @@
                 <th class="col-md-4">Teacher</th>
                 <th class="col-md-2">Phone Number</th>
                 <th class="col-md-2">E-mail</th>
-                <th class="col-md-2">Independent?</th>
+                <th class="col-md-2">Independent</th>
                 <th class="col-md-2">Lessons in {{vm.monthFilter}}</th>
             </tr>
         </thead>
@@ -62,7 +62,7 @@
                 <td>{{data.name}}</td>
                 <td>{{data.phoneNumber | phonenumber}}</td>
                 <td>{{data.email | date: 'MM/dd/yy HH:mm:ss'}}</td>
-                <td>{{data.independent}}</td>
+                <td>{{data.independent ?'yes':'no'}}</td>
                 <td>{{data.lessonCount}}</td>
             </tr>
         </tbody>

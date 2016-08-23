@@ -13,10 +13,10 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-6">
-                            <a href="#" class="active" id="login-form-link" ng-click="vm.showLogin()">Login</a>
+                            <a href="#" class="active" id="login-form-link" ng-click="home.showLogin()">Login</a>
                         </div>
                         <div class="col-xs-6">
-                            <a href="#" id="register-form-link" ng-click="vm.showRegister()">Register</a>
+                            <a href="#" id="register-form-link" ng-click="home.showRegister()">Register</a>
                         </div>
                     </div>
                     <hr>
@@ -26,10 +26,10 @@
                         <div class="col-lg-12">
                             <form id="login-form" role="form" style="display: block;">
                                 <div class="form-group">
-                                    <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Email" value="" ng-model="vm.loginEmail">
+                                    <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Email" value="" ng-model="home.loginEmail">
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" ng-model="vm.loginPassword">
+                                    <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" ng-model="home.loginPassword">
                                 </div>
                                 <div class="form-group text-center">
                                     <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
@@ -38,7 +38,7 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-6 col-sm-offset-3">
-                                            <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In" ng-click="vm.loginUser(vm.loginEmail, vm.loginPassword)">
+                                            <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In" ng-click="home.loginUser(home.loginEmail, home.loginPassword)">
                                         </div>
                                     </div>
                                 </div>
@@ -54,21 +54,21 @@
                             </form>
                             <form id="register-form" role="form" style="display: none;">
                                 <div class="form-group">
-                                    <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="" ng-model="vm.userName">
+                                    <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="" ng-model="home.userName">
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="" ng-model="vm.userEmail">
+                                    <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="" ng-model="home.userEmail">
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" ng-model="vm.password">
+                                    <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" ng-model="home.password">
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password" ng-model="vm.confirmPassword">
+                                    <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password" ng-model="home.confirmPassword">
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-6 col-sm-offset-3">
-                                            <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register Now" ng-click="vm.registerUser(vm.userEmail, vm.password, vm.confirmPassword)">
+                                            <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register Now" ng-click="home.registerUser(home.userEmail, home.password, home.confirmPassword)">
                                         </div>
                                     </div>
                                 </div>

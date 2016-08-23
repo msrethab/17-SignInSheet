@@ -17,7 +17,10 @@ function requiresToken(req, res, next) {
         // verifies secret and checks exp
         jwt.verify(token, app.get('superSecret'), function(err, decoded) {
             if (err) {
-                return res.json({ success: false, message: 'Failed to authenticate token.' });
+                return res.status(403).send({
+                    success: false,
+                    message: 'Failed to Authenticate Token.'
+                });
             } else {
                 // if everything is good, save to request for use in other routes
                 req.decoded = decoded;
@@ -37,4 +40,36 @@ function requiresToken(req, res, next) {
     }
 };
 
+// route middleware to verify admin or teacher access
+function requiresTeacherAccess(req, res, next) {
+    var decoded = req.decoded;
+    var role = decoded._doc.role;
+
+    if (role === 'teacher' || role ==='admin'){
+        next();
+    } else{
+        return  res.status(403).send({
+            success:false,
+            message: 'User role not Authorized!'
+        });
+    }
+}
+
+// route middleware to verify admin access
+function requiresAdminAccess(req, res, next) {
+    var decoded = req.decoded;
+    var role = decoded._doc.role;
+
+    if (role ==='admin'){
+        next();
+    } else{
+        return  res.status(403).send({
+            success:false,
+            message: 'User role not Authorized!'
+        });
+    }
+}
+
 module.exports.requiresToken = requiresToken;
+module.exports.requiresTeacherAccess = requiresTeacherAccess;
+module.exports.requiresAdminAccess = requiresAdminAccess;

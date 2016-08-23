@@ -7,7 +7,7 @@ var mid = require('../middleware/middleware');
 
 var teacherRoutes = express.Router();
 
-teacherRoutes.get('/teachers', function(req, res) {
+teacherRoutes.get('/teachers', mid.requiresToken, function(req, res) {
   Teacher.find({}, function(err, teachers) {
     if (err) {
       return res.status(500).json({ message: err.message });
@@ -16,7 +16,7 @@ teacherRoutes.get('/teachers', function(req, res) {
   });
 });
 
-teacherRoutes.get('/teachers/:id', function(req, res) {
+teacherRoutes.get('/teachers/:id', mid.requiresToken, function(req, res) {
   var id = req.params.id;
   Teacher.findById(id, function(err, teacher) {
     if (err) {
@@ -26,7 +26,7 @@ teacherRoutes.get('/teachers/:id', function(req, res) {
   });
 });
 
-teacherRoutes.post('/teachers', function(req, res) {
+teacherRoutes.post('/teachers', [mid.requiresToken, mid.requiresAdminAccess], function(req, res) {
   var teacher = req.body;
   Teacher.create(teacher, function(err, teacher) {
     if (err) {
@@ -36,7 +36,7 @@ teacherRoutes.post('/teachers', function(req, res) {
   });
 });
 
-teacherRoutes.put('/teachers/:id', function(req, res) {
+teacherRoutes.put('/teachers/:id', [mid.requiresToken, mid.requiresTeacherAccess], function(req, res) {
   var id = req.params.id;
   var teacher = req.body;
   if (teacher && teacher._id !== id) {
@@ -50,7 +50,7 @@ teacherRoutes.put('/teachers/:id', function(req, res) {
   });
 });
 
-teacherRoutes.delete('/teachers/:id', function(req, res) {
+teacherRoutes.delete('/teachers/:id', mid.requiresToken, function(req, res) {
   var id = req.params.id;
   Teacher.findByIdAndRemove(id, function(err, result) {
     if (err) {

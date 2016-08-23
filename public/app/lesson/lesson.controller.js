@@ -29,7 +29,7 @@
         if (vm.username) {
             vm.userLoggedIn = true;
         }
-        
+
         if (vm.userRole === 'teacher' || vm.userRole === 'admin') {
             vm.userIsTeacher = true;
         }
@@ -64,8 +64,8 @@
 
             if (vm.teacherId) {
                 getTeacherById(vm.teacherId);
+                countLessonsByTeacher();
             }
-            countLessonsByTeacher();
         }
 
         //Creating function to call LessonFactory's getLessons method to get and store all lessons

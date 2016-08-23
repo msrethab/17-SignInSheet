@@ -21,9 +21,7 @@
         // HOME STATES AND NESTED VIEWS ========================================
             .state('home', {
             url: '/home',
-            templateUrl: '../partials/partial-home.html',
-            controller: 'AuthController',
-            controllerAs: 'vm'
+            templateUrl: '../partials/partial-home.html'
         })
 
         // MULTIPLE ADDITIONAL STATES AND NESTED VIEWS =========================

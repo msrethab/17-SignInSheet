@@ -122,6 +122,9 @@
             AuthFactory.loginUser(loginEmail, loginPassword).then(function(response) {
                     vm.username = localStorageService.get("username");
                     vm.userRole = localStorageService.get("role");
+                    vm.userId = localStorageService.get("_id");
+                    vm.userName = localStorageService.get("name");
+                    vm.teacherId = localStorageService.get("teacherId");
                     vm.userLoggedIn = true;
                     vm.loginEmail = '';
                     vm.loginPassword = '';

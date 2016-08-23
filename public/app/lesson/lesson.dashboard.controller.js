@@ -69,7 +69,6 @@
             LessonFactory.editLesson(updatedLesson)
                 .then(function(response) { 
 
-                        vm.newTeacher = '';
                         vm.newStudent = '';
                         vm.newSignInDate ='';
                         vm.newDuration = '';

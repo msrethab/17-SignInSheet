@@ -7,7 +7,7 @@ var mid = require('../middleware/middleware');
 
 var studentRoutes = express.Router();
 
-studentRoutes.get('/students', function(req, res) {
+studentRoutes.get('/students', mid.requiresToken, function(req, res) {
   Student.find({}, function(err, students) {
     if (err) {
       return res.status(500).json({ message: err.message });
@@ -16,7 +16,7 @@ studentRoutes.get('/students', function(req, res) {
   });
 });
 
-studentRoutes.post('/students', function(req, res) {
+studentRoutes.post('/students', mid.requiresToken, function(req, res) {
   var student = req.body;
   Student.create(student, function(err, student) {
     if (err) {
@@ -26,7 +26,7 @@ studentRoutes.post('/students', function(req, res) {
   });
 });
 
-studentRoutes.put('/students/:id', function(req, res) {
+studentRoutes.put('/students/:id', mid.requiresToken, function(req, res) {
   var id = req.params.id;
   var student = req.body;
   if (student && student._id !== id) {
@@ -40,7 +40,7 @@ studentRoutes.put('/students/:id', function(req, res) {
   });
 });
 
-studentRoutes.delete('/students/:id', function(req, res) {
+studentRoutes.delete('/students/:id', mid.requiresToken, function(req, res) {
   var id = req.params.id;
   Student.findByIdAndRemove(id, function(err, result) {
     if (err) {

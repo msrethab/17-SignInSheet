@@ -23,7 +23,7 @@
                 <p>Phone: {{vm.currentTeacher.phoneNumber}}</p>
                 <p>Address: {{vm.currentTeacher.streetAddress}}, {{vm.currentTeacher.city}} {{vm.currentTeacher.state}}, {{vm.currentTeacher.zip}}</p>
                 <p>Gender: {{vm.currentTeacher.gender}}</p>
-                <p>Independent: {{vm.currentTeacher.independent}}</p>
+                <p>Independent: {{vm.currentTeacher.independent ?'yes':'no'}}</p>
                 <div class="profileButtons">
                     <button ng-click="showEditTeacherModal= !showEditTeacherModal" class="btn btn-primary">Edit Profile</button>
                     <button ng-click="showChangePasswordModal= !showChangePasswordModal" class="btn btn-primary">Change Password</button>

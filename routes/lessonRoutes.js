@@ -10,7 +10,7 @@ var mid = require('../middleware/middleware');
 var lessonRoutes = express.Router();
 
 // get route defaults to search for all lessons signed in today
-lessonRoutes.get('/lessons', function(req, res) {
+lessonRoutes.get('/lessons', mid.requiresToken, function(req, res) {
     var start = new Date();
     start.setHours(0, 0, 0, 0);
 
@@ -40,7 +40,7 @@ lessonRoutes.post('/lessons', function(req, res) {
     });
 });
 
-lessonRoutes.post('/lessons/search', function(req, res) {
+lessonRoutes.post('/lessons/search', [mid.requiresToken, mid.requiresTeacherAccess], function(req, res) {
     var search = req.body;
     var searchQuery = { signedInDate: { $gte: search.startDate, $lt: search.endDate }, archived: false };
 
@@ -62,7 +62,7 @@ lessonRoutes.post('/lessons/search', function(req, res) {
     });
 });
 
-lessonRoutes.get('/lessons/search/count', function(req, res) {
+lessonRoutes.get('/lessons/search/count', [mid.requiresToken, mid.requiresTeacherAccess],  function(req, res) {
 
     var month = req.query.month;
 
@@ -87,7 +87,7 @@ lessonRoutes.get('/lessons/search/count', function(req, res) {
     });
 });
 
-lessonRoutes.put('/lessons/:id', function(req, res) {
+lessonRoutes.put('/lessons/:id', [mid.requiresToken, mid.requiresTeacherAccess], function(req, res) {
     var id = req.params.id;
     var lesson = req.body;
     if (lesson && lesson._id !== id) {
@@ -101,7 +101,7 @@ lessonRoutes.put('/lessons/:id', function(req, res) {
     });
 });
 
-lessonRoutes.delete('/lessons/:id', function(req, res) {
+lessonRoutes.delete('/lessons/:id', [mid.requiresToken, mid.requiresTeacherAccess], function(req, res) {
     var id = req.params.id;
     Lesson.findByIdAndRemove(id, function(err, result) {
         if (err) {
