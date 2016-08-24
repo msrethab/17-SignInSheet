@@ -2,6 +2,6 @@
 module.exports = {
 
     'secret': 'signinsheetapplication',
-    'database': 'mongodb://localhost:27017/signinsheet'
+    'database': process.env.MONGODB_URI
 
 };
