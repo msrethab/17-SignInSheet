@@ -5,13 +5,11 @@
   "author": "Mark Srethabhakti",
   "private": true,
   "scripts": {
-    "start": "node server.js",
-    "postinstall": "bower install"
+    "start": "node server.js"
   },
   "dependencies": {
     "bcryptjs": "^2.3.0",
     "body-parser": "^1.15.2",
-    "bower": "^1.7.9",
     "express": "^4.14.0",
     "jsonwebtoken": "^7.1.7",
     "moment": "^2.14.1",
