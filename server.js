@@ -41,7 +41,7 @@ app.use(express.static(__dirname + '/public'));
 
 // basic route
 app.get('/', function(req, res) {
-    res.render('./public/index');
+    res.sendFile('./public/index');
 });
 
 // authorization and authentication routes containing register and login methods
