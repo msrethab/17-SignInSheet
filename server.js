@@ -35,9 +35,13 @@ app.use(function(req, res, next) {
     next();
 });
 
+//make express look in public directory for assets
+
+app.use(express.static(__dirname + '/public'));
+
 // basic route
 app.get('/', function(req, res) {
-    res.send('Hello! The API is at http://localhost:' + port + '/api');
+    res.render('./public/index');
 });
 
 // authorization and authentication routes containing register and login methods
