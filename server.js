@@ -35,15 +35,6 @@ app.use(function(req, res, next) {
     next();
 });
 
-//make express look in public directory for assets
-
-app.use(express.static(__dirname + '/public'));
-
-// basic route
-app.get('/', function(req, res) {
-    res.sendFile('./public/index');
-});
-
 // authorization and authentication routes containing register and login methods
 var authRoutes = require('./routes/authRoutes');
 app.use('/api', authRoutes);
